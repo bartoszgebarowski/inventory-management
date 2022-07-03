@@ -4,15 +4,29 @@ from google.oauth2.service_account import Credentials
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
-    ]
+    "https://www.googleapis.com/auth/drive",
+]
 
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("Inventory Management")
 
-stock = SHEET.worksheet("Stock")
-clients = SHEET.worksheet('Clients')
-stock_data = stock.get_all_records()
-clients_data = clients.get_all_records()
+
+def get_all_worksheets_titles() -> list:
+    """
+    Function that returns the list of all worksheets titles
+    """
+    worksheet_list = SHEET.worksheets()
+    worksheets_all = []
+    for index in range(len(worksheet_list)):
+        worksheets_all.append(worksheet_list[index].title)
+    return worksheets_all
+
+
+def print_all_worksheets():
+    """
+    Function that prints all worksheets in the spreadsheet to the terminal
+    """
+    for sheet in get_all_worksheets_titles():
+        print(sheet)
