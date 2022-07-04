@@ -157,4 +157,28 @@ def duplicate_sheet():
         return
 
 
-duplicate_sheet()
+def rename_sheet():
+    """
+    Function that renames the chosen worksheet by the user.
+    """
+    user_input = input("Enter the worksheet name to rename: ")
+    try:
+        validated_input = validate_user_chosen_sheet(user_input)
+        user_input_new_name = input("Enter new worksheet name: ")
+        if (
+            not check_if_worksheet_exist(user_input_new_name)
+            and len(user_input_new_name) > 0
+        ):
+            print("Processing ...")
+            index = get_sheet_index(validated_input)
+            sheet_to_rename = SHEET.get_worksheet(index)
+            sheet_to_rename.update_title(user_input_new_name)
+            print("Worksheet successfully renamed !")
+        elif len(user_input_new_name) <= 0:
+            print("A worksheet name must be at least 1 character long !")
+            return
+        else:
+            print(f"Worksheet with name {validated_input} already exist !")
+    except WorksheetNotFoundError:
+        print("Worksheet not found")
+        return
