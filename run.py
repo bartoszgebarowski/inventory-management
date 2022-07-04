@@ -26,6 +26,11 @@ def get_all_worksheets_titles() -> list:
         worksheets_all.append(worksheet_list[index].title)
     return worksheets_all
 
+def check_if_worksheet_exist(input_candidate) -> bool:
+    user_input_lower = input_candidate.lower()
+    words_to_check = get_all_worksheets_titles()
+    worksheets_names = [word for word in words_to_check if word.lower() == user_input_lower]
+    return bool(worksheets_names)
 
 def print_all_worksheets():
     """
@@ -66,4 +71,15 @@ def delete_worksheet():
     else:
         print('Could not remove worksheet')
 
-delete_worksheet()
+def add_worksheet():
+    """
+    Function that adds a worksheet to a spreadsheet
+    """
+    user_input = input('Enter the name of the new worksheet: ')
+    if check_if_worksheet_exist(user_input) == False:
+        print('Processing...')
+        sheet_title = user_input 
+        SHEET.add_worksheet(title=sheet_title, rows=1000, cols=26)
+        print('SHEET successfully added !')
+    else: 
+        print('You cant add the sheet with the same name')
