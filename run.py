@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -16,7 +17,7 @@ SHEET = GSPREAD_CLIENT.open("Inventory Management")
 class WorksheetNotFoundError(Exception):
     pass
 
-current_worksheet = ''
+current_worksheet = 'Stock'
 
 def get_all_worksheets_titles() -> list:
     """
@@ -196,3 +197,14 @@ def set_active_worksheet():
     else:
         current_worksheet = validated_input
         return current_worksheet
+
+def print_worksheet_content():
+    global current_worksheet
+    if len(current_worksheet) == 0:
+        print('No active worksheet was selected.')
+    else:
+        my_worksheet = SHEET.worksheet(current_worksheet)
+        data = my_worksheet.get_all_values()
+        data_to_print = tabulate(data, headers='firstrow', numalign='center', stralign='center')
+        print(data_to_print)
+print_worksheet_content()
