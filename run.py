@@ -16,6 +16,7 @@ SHEET = GSPREAD_CLIENT.open("Inventory Management")
 class WorksheetNotFoundError(Exception):
     pass
 
+current_worksheet = ''
 
 def get_all_worksheets_titles() -> list:
     """
@@ -182,3 +183,16 @@ def rename_sheet():
     except WorksheetNotFoundError:
         print("Worksheet not found")
         return
+
+def set_active_worksheet():
+    global current_worksheet
+    print_all_worksheets()
+    try:
+        user_input = input('Enter the worksheet name that you will work on: ')
+        validated_input = validate_user_chosen_sheet(user_input)
+    except WorksheetNotFoundError: 
+        print('Worksheet not found')
+        return
+    else:
+        current_worksheet = validated_input
+        return current_worksheet
