@@ -17,6 +17,9 @@ SHEET = GSPREAD_CLIENT.open("Inventory Management")
 class WorksheetNotFoundError(Exception):
     pass
 
+class SpreadSheetNotFoundError(Exception):
+    pass
+
 current_worksheet = 'Stock'
 
 def get_all_worksheets_titles() -> list:
@@ -186,6 +189,9 @@ def rename_sheet():
         return
 
 def set_active_worksheet():
+    """
+    Function that will change the active worksheet
+    """
     global current_worksheet
     print_all_worksheets()
     try:
@@ -198,13 +204,46 @@ def set_active_worksheet():
         current_worksheet = validated_input
         return current_worksheet
 
-def print_worksheet_content():
+def check_active_worksheet():
+    """
+    Funtion that checks if active worksheet was selected
+    """
     global current_worksheet
-    if len(current_worksheet) == 0:
+    if current_worksheet == None:
+        return False
+    else:
+        return True
+
+
+def print_worksheet_content():
+    """
+    Function that prints current worksheet content
+    """
+    global current_worksheet
+    if not check_active_worksheet():
         print('No active worksheet was selected.')
     else:
         my_worksheet = SHEET.worksheet(current_worksheet)
         data = my_worksheet.get_all_values()
         data_to_print = tabulate(data, headers='firstrow', numalign='center', stralign='center')
         print(data_to_print)
-print_worksheet_content()
+
+
+def get_current_keys():
+    """
+    Function that returns data sorting keys
+    """
+    global current_worksheet
+    try:
+        if not check_active_worksheet():
+            print('No active worksheet was selected.')
+        else:
+            active_worksheet = current_worksheet
+            selected_worksheet = SHEET.worksheet(active_worksheet)
+            all_data = selected_worksheet.get_all_values()
+            keys = []
+            for item in all_data[0]:
+                keys.append(item)
+            return keys
+    except IndexError:
+        print('Worksheet is empty. Please add data sorting keys first.')
