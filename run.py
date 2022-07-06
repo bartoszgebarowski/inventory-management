@@ -17,10 +17,13 @@ SHEET = GSPREAD_CLIENT.open("Inventory Management")
 class WorksheetNotFoundError(Exception):
     pass
 
+
 class SpreadSheetNotFoundError(Exception):
     pass
 
-current_worksheet = 'Stock'
+
+current_worksheet = "Copy of Stock"
+
 
 def get_all_worksheets_titles() -> list:
     """
@@ -120,13 +123,20 @@ def delete_worksheet():
     except WorksheetNotFoundError:
         print("Worksheet not found")
         return
-    if len(get_all_worksheets_titles()) > 1:
+    if (
+        len(get_all_worksheets_titles()) > 1
+        and not worksheet_name == get_all_worksheets_titles()[0]
+    ):
         print("Processing ...")
         sheet_to_remove = SHEET.worksheet(worksheet_name)
         SHEET.del_worksheet(sheet_to_remove)
         print("Sheet successfully removed !")
+    elif worksheet_name == get_all_worksheets_titles()[0]:
+        print("You can't delete template worksheet")
+
     elif len(get_all_worksheets_titles()) == 1:
         print("You can't delete all the sheets in a spreadsheet.")
+
     else:
         print("Could not remove worksheet")
 
@@ -173,6 +183,7 @@ def rename_sheet():
         if (
             not check_if_worksheet_exist(user_input_new_name)
             and len(user_input_new_name) > 0
+            and not validated_input == get_all_worksheets_titles()[0]
         ):
             print("Processing ...")
             index = get_sheet_index(validated_input)
@@ -182,11 +193,18 @@ def rename_sheet():
         elif len(user_input_new_name) <= 0:
             print("A worksheet name must be at least 1 character long !")
             return
+        elif (
+            not check_if_worksheet_exist(user_input_new_name)
+            and len(user_input_new_name) > 0
+            and validated_input == get_all_worksheets_titles()[0]
+        ):
+            print("You can't rename the template worksheet")
         else:
             print(f"Worksheet with name {validated_input} already exist !")
     except WorksheetNotFoundError:
         print("Worksheet not found")
         return
+
 
 def set_active_worksheet():
     """
@@ -195,14 +213,18 @@ def set_active_worksheet():
     global current_worksheet
     print_all_worksheets()
     try:
-        user_input = input('Enter the worksheet name that you will work on: ')
+        user_input = input("Enter the worksheet name that you will work on: ")
         validated_input = validate_user_chosen_sheet(user_input)
-    except WorksheetNotFoundError: 
-        print('Worksheet not found')
+    except WorksheetNotFoundError:
+        print("Worksheet not found")
         return
+    if validated_input == get_all_worksheets_titles()[0]:
+        print("You cant work on the the template worksheet")
+
     else:
         current_worksheet = validated_input
         return current_worksheet
+
 
 def check_active_worksheet():
     """
@@ -221,11 +243,13 @@ def print_worksheet_content():
     """
     global current_worksheet
     if not check_active_worksheet():
-        print('No active worksheet was selected.')
+        print("No active worksheet was selected.")
     else:
         my_worksheet = SHEET.worksheet(current_worksheet)
         data = my_worksheet.get_all_values()
-        data_to_print = tabulate(data, headers='firstrow', numalign='center', stralign='center')
+        data_to_print = tabulate(
+            data, headers="firstrow", numalign="center", stralign="center"
+        )
         print(data_to_print)
 
 
@@ -236,7 +260,7 @@ def get_current_keys():
     global current_worksheet
     try:
         if not check_active_worksheet():
-            print('No active worksheet was selected.')
+            print("No active worksheet was selected.")
         else:
             active_worksheet = current_worksheet
             selected_worksheet = SHEET.worksheet(active_worksheet)
@@ -254,7 +278,7 @@ def check_keys_for_duplicates(keys_candidate) -> bool:
     """
     Functions that will check if data sorting keys are unique
     """
-    compare_keys= []
+    compare_keys = []
     for key in keys_candidate:
         compare_keys.append(key.lower())
 
