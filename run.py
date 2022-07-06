@@ -139,7 +139,7 @@ def add_worksheet():
     if check_if_worksheet_exist(user_input) == False:
         print("Processing...")
         sheet_title = user_input
-        SHEET.add_worksheet(title=sheet_title, rows=1000, cols=26)
+        SHEET.add_worksheet(title=sheet_title, rows=200, cols=6)
         print("SHEET successfully added !")
     else:
         print("You cant add the sheet with the same name")
@@ -246,4 +246,19 @@ def get_current_keys():
                 keys.append(item)
             return keys
     except IndexError:
-        print('Worksheet is empty. Please add data sorting keys first.')
+        keys = []
+        return keys
+
+
+def check_keys_for_duplicates(keys_candidate) -> bool:
+    """
+    Functions that will check if data sorting keys are unique
+    """
+    compare_keys= []
+    for key in keys_candidate:
+        compare_keys.append(key.lower())
+
+    if len(compare_keys) == len(set(compare_keys)) and len(compare_keys) >= 1:
+        return True
+    else:
+        return False
