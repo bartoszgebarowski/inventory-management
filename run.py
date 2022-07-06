@@ -286,3 +286,18 @@ def check_keys_for_duplicates(keys_candidate) -> bool:
         return True
     else:
         return False
+
+def clear_worksheet():
+    """
+    Function that removes clears the worksheet from all values
+    """
+    global current_worksheet
+    if not check_active_worksheet():
+        print("No active worksheet was selected.")
+    else:
+        my_worksheet = SHEET.worksheet(current_worksheet)
+        print('Processing ...')
+        my_worksheet.clear()
+        print('The worksheet was successfully cleared')
+        print('Remember to set new data sorting keys, before moving on !')
+
