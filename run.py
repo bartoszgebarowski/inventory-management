@@ -22,7 +22,7 @@ class SpreadSheetNotFoundError(Exception):
     pass
 
 
-current_worksheet = "Copy of Stock"
+current_worksheet = 'Copy of Stock'
 
 
 def get_all_worksheets_titles() -> list:
@@ -253,19 +253,20 @@ def print_worksheet_content():
         print(data_to_print)
 
 
-def get_current_keys():
+def get_current_keys() -> list:
     """
     Function that returns data sorting keys
     """
     global current_worksheet
+    keys = []
     try:
         if not check_active_worksheet():
             print("No active worksheet was selected.")
+            return keys
         else:
             active_worksheet = current_worksheet
             selected_worksheet = SHEET.worksheet(active_worksheet)
             all_data = selected_worksheet.get_all_values()
-            keys = []
             for item in all_data[0]:
                 keys.append(item)
             return keys
@@ -301,3 +302,83 @@ def clear_worksheet():
         print('The worksheet was successfully cleared')
         print('Remember to set new data sorting keys, before moving on !')
 
+def print_keys():
+    """
+    Function that will print out the data sorting keys
+    """
+    global current_worksheet
+    if not check_active_worksheet():
+        print("No active worksheet was selected.")
+    elif check_active_worksheet() and not check_keys_for_duplicates(get_current_keys()):
+        print('You have to set your data sorting keys first !')
+    else:
+      keys = get_current_keys()
+      data_to_print = ' '.join(keys)
+      print(f'Data sorting keys: {data_to_print}')
+
+def choose_number_of_keys() -> int:
+    """
+    Function that will return the number of keys that the user want to use for data filtering
+    """
+    try: 
+        user_input_number_of_keys = int(input('Enter how much keys do you want to use: '))
+    except ValueError:
+        print('Your input must be integer')
+        return 0
+    if user_input_number_of_keys == 0:
+        print("Zero cant be chosen")
+        return 0
+    elif check_keys_for_duplicates(get_current_keys()) == False: 
+        print("You haven't set your data sorting keys")
+        return 0
+    elif user_input_number_of_keys > len(get_current_keys()):
+        print("You have chosen more keys than you currently have")
+        return 0
+    else:
+        return int(user_input_number_of_keys)
+
+
+def get_user_keys() -> list:
+    """
+    Function that returns keys chosen by user
+    """
+    print_keys()
+    chosen_keys = []
+    desired_range = choose_number_of_keys()
+    if desired_range > 0:
+        for i in range(1, desired_range + 1):
+            chosen_keys.append(input(f'Enter key number {i}: '))
+    return chosen_keys
+
+def validate_user_keys(keys_candidate) -> list:
+    """
+    Function that validates user keys
+    """
+    user_keys = keys_candidate
+    worksheet_keys= get_current_keys()
+    validated_keys = [b for b in worksheet_keys if b.lower() in (a.lower() for a in user_keys)]
+    result = any(elem in validated_keys for elem in worksheet_keys)
+    if result:
+        return validated_keys
+    else:
+        print("Keys do not match") 
+        validated_keys = []
+        return validated_keys
+    
+def filter_data_by_keys(value_split):
+    """
+    Function that will filter out the data by the chosen keys
+    """
+    global current_worksheet
+    user_keys = validate_user_keys(get_user_keys())
+    
+    worksheet = SHEET.worksheet(current_worksheet)
+    data = worksheet.get_all_records()
+    store = []
+    for item in data:
+        for key in user_keys:
+            store.append(item[key])
+    stringified = [str(int) for int in store]
+    data_to_print = "\n".join([" | ".join(stringified[i:i+value_split]) for i in range(0,len(stringified),value_split)])
+    print(data_to_print)
+    
