@@ -381,4 +381,44 @@ def filter_data_by_keys(value_split):
     stringified = [str(int) for int in store]
     data_to_print = "\n".join([" | ".join(stringified[i:i+value_split]) for i in range(0,len(stringified),value_split)])
     print(data_to_print)
+
+
+def get_user_new_keys():
+    current_keys = get_current_keys()
+    current_keys_len = len(current_keys)
     
+    new_keys = []
+    for i in range(1, current_keys_len + 1):
+            new_keys.append(input(f'Enter key number {i}: '))
+    duplicate_keys = check_keys_for_duplicates(new_keys)
+    return new_keys
+
+def check_input_if_first_char_is_space(new_keys_candidate) -> list:
+    try:
+        evaluated_list = [item for item in new_keys_candidate if item[0] != ' ']
+    except IndexError:
+        evaluated_list = []
+        return evaluated_list
+    else: 
+        return evaluated_list
+    
+def update_multiple_sorting_keys():
+    global current_worksheet
+    worksheet = SHEET.worksheet(current_worksheet)
+    user_keys = get_user_new_keys()
+    validated_keys = check_input_if_first_char_is_space(user_keys)
+    duplication_validation = check_keys_for_duplicates(user_keys)
+    if len(validated_keys) != len(user_keys):
+        print('Invalid input')
+    elif not duplication_validation:
+        print('Keys are not unique')
+    else:
+        print('Processing ...')
+        worksheet.batch_update([
+            {
+                'range': 'A1:F1', 
+                'values': [user_keys]
+            },
+        ])
+        print('Keys were updated successfully')
+update_multiple_sorting_keys()
