@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from tabulate import tabulate
+import pandas as pd
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -397,7 +398,10 @@ def filter_data_by_keys(value_split):
     print(data_to_print)
 
 
-def get_user_new_keys():
+def get_user_new_keys() -> list:
+    """
+    Function that returns a list of keys, in range of existing keys
+    """
     current_keys = get_current_keys()
     current_keys_len = len(current_keys)
 
@@ -408,6 +412,9 @@ def get_user_new_keys():
 
 
 def check_input_if_first_char_is_space(new_keys_candidate) -> list:
+    """
+    Function that check if first character in item is a space and returns a list without items, that are starting with space
+    """
     try:
         evaluated_list = [item for item in new_keys_candidate if item[0] != " "]
     except IndexError:
@@ -418,6 +425,9 @@ def check_input_if_first_char_is_space(new_keys_candidate) -> list:
 
 
 def update_multiple_sorting_keys():
+    """
+    Function that updates existing data sorting keys
+    """
     global current_worksheet
     worksheet = SHEET.worksheet(current_worksheet)
     user_keys = get_user_new_keys()
@@ -438,6 +448,9 @@ def update_multiple_sorting_keys():
 
 
 def get_number_of_new_keys() -> int:
+    """
+    Function that returns a number of keys that user want to create
+    """
     try:
         user_input_number_of_keys = int(
             input("Enter how many keys do you want to use: ")
@@ -453,6 +466,9 @@ def get_number_of_new_keys() -> int:
 
 
 def input_new_keys(keys_number) -> list:
+    """
+    Function that retuns list of inputs
+    """
     new_keys = []
     if keys_number == 0:
         print("No data")
@@ -465,6 +481,9 @@ def input_new_keys(keys_number) -> list:
 
 
 def set_new_keys():
+    """
+    Function that set new data sorting keys if none are present in the worksheet
+    """
     global current_worksheet
     worksheet = SHEET.worksheet(current_worksheet)
     values_list = worksheet.row_values(1)
@@ -487,3 +506,70 @@ def set_new_keys():
             ]
         )
         print("Keys were set successfully")
+
+
+def get_user_data_range() -> list:
+    """
+    Function that get the range of records to display in the table
+    """
+    numbers_to_display = []
+    try:
+        start_number = int(input("Enter the starting number from 1 to 200: "))
+        end_number = int(input("Enter the end number from from 1 to 200: "))
+    except ValueError:
+        print("Not a number")
+        return numbers_to_display
+    else:
+        if start_number <= 0 or start_number > 200:
+            print("Invalid range")
+            return numbers_to_display
+        elif end_number <= 0 or end_number > 200:
+            print("Invalid range")
+            return numbers_to_display
+        else:
+            numbers_to_display.append(start_number)
+            numbers_to_display.append(end_number)
+            return numbers_to_display
+
+
+def calculate_row_range(row_range: list) -> list:
+    """
+    Function that calculates the required amount of indexes and returns them in the list
+    """
+    row_counter = []
+    for i in range(len(row_range)):
+        i = i + 1
+        row_counter.append(f"R{i}")
+    return row_counter
+
+
+def calculate_column_range(column_range: list) -> list:
+    """
+    Function that calculates the required amount of columns and returns them in the list
+    """
+    column_counter = []
+    for i in range(len(column_range)):
+        i = i + 1
+        column_counter.append(f"C{i}")
+    return column_counter
+
+
+def indexed_table(user_range):
+    """
+    Function that prints current worksheet content, with columns and rows symbols in a desired range
+    """
+    global current_worksheet
+    if not check_active_worksheet():
+        print("No active worksheet was selected.")
+    elif len(user_range) == 0:
+        print("No range available")
+    else:
+        my_worksheet = SHEET.worksheet(current_worksheet)
+        data = my_worksheet.get_all_values()[user_range[0] - 1 : user_range[1] + 1]
+        row_counter = calculate_row_range(data)
+        column_counter = calculate_column_range(get_current_keys())
+        pd.set_option("display.max_rows", 200)
+        data_indexed = pd.DataFrame(
+            data, index=pd.Index(row_counter), columns=pd.Index(column_counter)
+        )
+        print(data_indexed)
