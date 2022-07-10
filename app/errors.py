@@ -1,0 +1,2 @@
+class WorksheetNotFoundError(Exception):
+    pass
