@@ -1,7 +1,6 @@
 from app.errors import WorksheetNotFoundError
+from app import app_config as config
 from app import worksheet, keys
-
-current_worksheet = 'Copy of Stock'
 
 def validate_user_chosen_sheet(input_candidate: str, words_to_check: list) -> str:
     """
@@ -31,8 +30,7 @@ def check_active_worksheet():
     """
     Funtion that checks if active worksheet was selected
     """
-    global current_worksheet
-    if current_worksheet is None:
+    if config.current_worksheet is None:
         return False
     else:
         return True

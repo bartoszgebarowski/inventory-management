@@ -1,4 +1,5 @@
-from app import config, validation, keys, worksheet
+from app import validation, keys
+from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
 import pandas as pd
@@ -104,7 +105,6 @@ def set_active_worksheet():
     """
     Function that will change the active worksheet
     """
-    global current_worksheet
     print_all_worksheets()
     try:
         user_input = input("Enter the worksheet name that you will work on: ")
@@ -117,8 +117,8 @@ def set_active_worksheet():
         print("You cant work on the the template worksheet")
 
     else:
-        current_worksheet = validated_input
-        return current_worksheet
+        config.current_worksheet = validated_input
+        return config.current_worksheet
 
 def duplicate_sheet():
     """
@@ -176,11 +176,10 @@ def print_worksheet_content():
     """
     Function that prints current worksheet content
     """
-    global current_worksheet
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     else:
-        my_worksheet = config.SHEET.worksheet(current_worksheet)
+        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
         data = my_worksheet.get_all_values()
         data_to_print = tabulate(
             data, headers="firstrow", numalign="center", stralign="center"
@@ -191,11 +190,10 @@ def clear_worksheet():
     """
     Function that removes clears the worksheet from all values
     """
-    global current_worksheet
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     else:
-        my_worksheet = config.SHEET.worksheet(current_worksheet)
+        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
         print("Processing ...")
         my_worksheet.clear()
         print("The worksheet was successfully cleared")
@@ -205,13 +203,12 @@ def indexed_table(user_range):
     """
     Function that prints current worksheet content, with columns and rows symbols in a desired range
     """
-    global current_worksheet
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     elif len(user_range) == 0:
         print("No range available")
     else:
-        my_worksheet = config.SHEET.worksheet(current_worksheet)
+        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
         data = my_worksheet.get_all_values()[user_range[0] - 1 : user_range[1]]
         print(data)
         row_counter = keys.calculate_row_range(user_range[0], len(data))

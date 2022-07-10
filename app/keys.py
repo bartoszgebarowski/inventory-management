@@ -1,5 +1,5 @@
-from app import worksheet, validation, config
-current_worksheet = 'Copy of Stock'
+from app import validation
+from app import app_config as config
 
 def get_user_keys() -> list:
     """
@@ -18,14 +18,13 @@ def get_current_keys() -> list:
     """
     Function that returns data sorting keys
     """
-    global current_worksheet
     keys = []
     
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
         return keys
     else:
-        active_worksheet = current_worksheet
+        active_worksheet = config.current_worksheet
         selected_worksheet = config.SHEET.worksheet(active_worksheet)
         all_data = selected_worksheet.get_all_values()
         try:
@@ -39,7 +38,6 @@ def print_keys():
     """
     Function that will print out the data sorting keys
     """
-    global current_worksheet
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     elif validation.check_active_worksheet() and not validation.check_keys_for_duplicates(get_current_keys()):
@@ -77,10 +75,9 @@ def filter_data_by_keys(value_split):
     """
     Function that will filter out the data by the chosen keys
     """
-    global current_worksheet
     user_keys = validation.validate_user_keys(get_user_keys())
 
-    worksheet = config.SHEET.worksheet(current_worksheet)
+    worksheet = config.SHEET.worksheet(config.current_worksheet)
     data = worksheet.get_all_records()
     store = []
     for item in data:
@@ -111,8 +108,7 @@ def update_multiple_sorting_keys():
     """
     Function that updates existing data sorting keys
     """
-    global current_worksheet
-    worksheet = config.SHEET.worksheet(current_worksheet)
+    worksheet = config.SHEET.worksheet(config.current_worksheet)
     user_keys = get_user_new_keys()
     validated_keys = validation.check_input_if_first_char_is_space(user_keys)
     duplication_validation = validation.check_keys_for_duplicates(user_keys)
@@ -165,8 +161,7 @@ def set_new_keys():
     """
     Function that set new data sorting keys if none are present in the worksheet
     """
-    global current_worksheet
-    worksheet = config.SHEET.worksheet(current_worksheet)
+    worksheet = config.SHEET.worksheet(config.current_worksheet)
     values_list = worksheet.row_values(1)
     validated_keys = input_new_keys(get_number_of_new_keys())
     evaluated_list = validation.check_input_if_first_char_is_space(validated_keys)
