@@ -2,6 +2,7 @@ from app.errors import WorksheetNotFoundError
 from app import app_config as config
 from app import worksheet, keys
 
+
 def validate_user_chosen_sheet(input_candidate: str, words_to_check: list) -> str:
     """
     Function that checks if user input exist as a worksheet
@@ -15,6 +16,7 @@ def validate_user_chosen_sheet(input_candidate: str, words_to_check: list) -> st
     except IndexError:
         raise WorksheetNotFoundError
 
+
 def check_if_worksheet_exist(input_candidate) -> bool:
     """
     Function that checks if worksheet exist
@@ -26,6 +28,7 @@ def check_if_worksheet_exist(input_candidate) -> bool:
     ]
     return bool(worksheets_names)
 
+
 def check_active_worksheet():
     """
     Funtion that checks if active worksheet was selected
@@ -34,6 +37,7 @@ def check_active_worksheet():
         return False
     else:
         return True
+
 
 def check_keys_for_duplicates(keys_candidate: list) -> bool:
     """
@@ -48,6 +52,7 @@ def check_keys_for_duplicates(keys_candidate: list) -> bool:
     else:
         return False
 
+
 def validate_user_keys(keys_candidate) -> list:
     """
     Function that validates user keys
@@ -55,9 +60,7 @@ def validate_user_keys(keys_candidate) -> list:
     user_keys = keys_candidate
     worksheet_keys = keys.get_current_keys()
     keys_lower = (a.lower() for a in user_keys)
-    validated_keys = [
-        b for b in worksheet_keys if b.lower() in keys_lower
-    ]
+    validated_keys = [b for b in worksheet_keys if b.lower() in keys_lower]
     result = any(elem in validated_keys for elem in worksheet_keys)
     if result:
         return validated_keys

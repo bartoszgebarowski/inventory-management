@@ -1,6 +1,7 @@
 from app import validation
 from app import app_config as config
 
+
 def get_user_keys() -> list:
     """
     Function that returns keys chosen by user
@@ -19,7 +20,7 @@ def get_current_keys() -> list:
     Function that returns data sorting keys
     """
     keys = []
-    
+
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
         return keys
@@ -34,18 +35,23 @@ def get_current_keys() -> list:
             keys = []
         return keys
 
+
 def print_keys():
     """
     Function that will print out the data sorting keys
     """
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
-    elif validation.check_active_worksheet() and not validation.check_keys_for_duplicates(get_current_keys()):
+    elif (
+        validation.check_active_worksheet()
+        and not validation.check_keys_for_duplicates(get_current_keys())
+    ):
         print("You have to set your data sorting keys first !")
     else:
         keys = get_current_keys()
         data_to_print = " ".join(keys)
         print(f"Data sorting keys: {data_to_print}")
+
 
 def choose_number_of_keys() -> int:
     """
@@ -71,6 +77,7 @@ def choose_number_of_keys() -> int:
     # TODO: change to raise custom error if number is incorrect
     return int(user_input_number_of_keys)
 
+
 def filter_data_by_keys(value_split):
     """
     Function that will filter out the data by the chosen keys
@@ -92,6 +99,7 @@ def filter_data_by_keys(value_split):
     )
     print(data_to_print)
 
+
 def get_user_new_keys() -> list:
     """
     Function that returns a list of keys, in range of existing keys
@@ -103,6 +111,7 @@ def get_user_new_keys() -> list:
     for i in range(1, current_keys_len + 1):
         new_keys.append(input(f"Enter key number {i}:\n"))
     return new_keys
+
 
 def update_multiple_sorting_keys():
     """
@@ -143,6 +152,7 @@ def get_number_of_new_keys() -> int:
     else:
         return int(user_input_number_of_keys)
 
+
 def input_new_keys(keys_number) -> list:
     """
     Function that retuns list of inputs
@@ -151,11 +161,12 @@ def input_new_keys(keys_number) -> list:
     if keys_number > 6:
         print("'You cant add more than 6 keys'")
     elif keys_number == 0:
-        print('No data')
+        print("No data")
     else:
         for i in range(1, keys_number + 1):
             new_keys.append(input(f"Enter key number {i}:\n"))
     return new_keys
+
 
 def set_new_keys():
     """
@@ -183,6 +194,7 @@ def set_new_keys():
         )
         print("Keys were set successfully")
 
+
 def get_user_data_range() -> list:
     """
     Function that get the range of records to display in the table
@@ -197,14 +209,15 @@ def get_user_data_range() -> list:
 
     if start_number <= 0 or start_number > 200:
         print("Invalid range")
-        
+
     elif end_number <= 0 or end_number > 200:
         print("Invalid range")
-       
+
     else:
         numbers_to_display.append(start_number)
         numbers_to_display.append(end_number)
     return numbers_to_display
+
 
 def calculate_row_range(user_input: int, row_len: int) -> list:
     """

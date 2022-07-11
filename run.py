@@ -1,31 +1,42 @@
-from app import worksheet
+from app import worksheet, messages
 
 
 while True:
-    worksheet.print_menu()
-    user_input = input('User choice:\n')
+    messages.print_menu()
+    user_input = input("Make your selection:\n")
     user_choice_lower = user_input.lower()
-    if user_choice_lower == 'a':
+    if user_choice_lower == "1":
         worksheet.print_all_worksheets()
         worksheet.add_worksheet()
-    elif user_choice_lower == 'r':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "2":
         worksheet.print_all_worksheets()
         worksheet.rename_sheet()
-    elif user_choice_lower == 's':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "3":
         worksheet.print_all_worksheets()
         worksheet.set_active_worksheet()
-    elif user_choice_lower == 'del':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "4":
         worksheet.print_all_worksheets()
         worksheet.delete_worksheet()
-    elif user_choice_lower == 'dup':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "5":
         worksheet.print_all_worksheets()
         worksheet.duplicate_sheet()
-    elif user_choice_lower == 'pc':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "6":
         worksheet.print_worksheet_content()
-    elif user_choice_lower == 'cw':
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "7":
         worksheet.clear_worksheet()
-    elif user_choice_lower == 'q':
-        print('Exit the program. Thanks for using Inventory Management !')
+        messages.wait_in_seconds(1)
+    elif user_choice_lower == "h" or user_choice_lower == "help":
+        messages.help()
+        messages.wait_in_seconds(15)
+    elif user_choice_lower == "q":
+        print("Exit the program. Thanks for using Inventory Management !")
         break
     else:
-        print('Invalid input')
+        print("Input not recognized. Please try again.")
+        messages.wait_in_seconds(1)

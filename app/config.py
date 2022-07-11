@@ -1,8 +1,8 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+
 class Config:
-    
 
     SCOPE = [
         "https://www.googleapis.com/auth/spreadsheets",
@@ -22,8 +22,7 @@ class Config:
     @property
     def current_worksheet(self):
         return self._current_worksheet
-    
+
     @current_worksheet.setter
     def current_worksheet(self, worksheet_name: str):
         self._current_worksheet = worksheet_name
-    
