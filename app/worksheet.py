@@ -4,6 +4,10 @@ from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
 import pandas as pd
 
+def print_help():
+    print('Instructions')
+
+
 def get_all_worksheets_titles() -> list:
     """
     Function that returns the list of all worksheets titles
@@ -61,6 +65,7 @@ def get_sheet_index(validated_input: str) -> int:
     return index
 
 def add_worksheet():
+    # TODO validation no spaces, special signs 
     """
     Function that adds a worksheet to a spreadsheet
     """
@@ -118,6 +123,7 @@ def set_active_worksheet():
 
     else:
         config.current_worksheet = validated_input
+        print(f'Yay {validated_input}')
         return config.current_worksheet
 
 def duplicate_sheet():
@@ -176,13 +182,14 @@ def print_worksheet_content():
     """
     Function that prints current worksheet content
     """
+    # TODO what if empty 
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     else:
-        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
-        data = my_worksheet.get_all_values()
+        worksheet = config.SHEET.worksheet(config.current_worksheet)
+        worksheet_data = worksheet.get_all_values()
         data_to_print = tabulate(
-            data, headers="firstrow", numalign="center", stralign="center"
+            worksheet_data, headers="firstrow", numalign="center", stralign="center"
         )
         print(data_to_print)
 
@@ -190,12 +197,13 @@ def clear_worksheet():
     """
     Function that removes clears the worksheet from all values
     """
+    # TODO confirmation if user want to do this
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     else:
-        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
+        worksheet = config.SHEET.worksheet(config.current_worksheet)
         print("Processing ...")
-        my_worksheet.clear()
+        worksheet.clear()
         print("The worksheet was successfully cleared")
         print("Remember to set new data sorting keys, before moving on !")
 
@@ -207,14 +215,15 @@ def indexed_table(user_range):
         print("No active worksheet was selected.")
     elif len(user_range) == 0:
         print("No range available")
+    # TODO : deal with situation when there is no data in that range
     else:
-        my_worksheet = config.SHEET.worksheet(config.current_worksheet)
-        data = my_worksheet.get_all_values()[user_range[0] - 1 : user_range[1]]
-        print(data)
-        row_counter = keys.calculate_row_range(user_range[0], len(data))
+        worksheet = config.SHEET.worksheet(config.current_worksheet)
+        worksheet_data = worksheet.get_all_values()[user_range[0] - 1 : user_range[1]]
+        print(worksheet_data)
+        row_counter = keys.calculate_row_range(user_range[0], len(worksheet_data))
         column_counter = keys.calculate_column_range(len(keys.get_current_keys()))
         pd.set_option("display.max_rows", 200)
         data_indexed = pd.DataFrame(
-            data, index=pd.Index(row_counter), columns=pd.Index(column_counter)
+            worksheet_data, index=pd.Index(row_counter), columns=pd.Index(column_counter)
         )
         print(data_indexed)
