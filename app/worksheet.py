@@ -4,10 +4,19 @@ from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
 import pandas as pd
 
-def print_help():
-    print('Instructions')
 
-
+def print_menu():
+    "Function that will print out the main menu"
+    print('Main menu')
+    print('1. Set worksheet to work on: press s')
+    print('2. Add worksheet: press a')
+    print('3. Rename sheet: press r')
+    print('4. Delete worksheet: type del')
+    print('5. Duplicate worksheet: type dup')
+    print('6. Print worksheet content: type pc')
+    print('7. Remove all content from worksheet: type cw')
+    print('8. Exit the program: type q')
+    
 def get_all_worksheets_titles() -> list:
     """
     Function that returns the list of all worksheets titles
@@ -69,7 +78,7 @@ def add_worksheet():
     """
     Function that adds a worksheet to a spreadsheet
     """
-    user_input = input("Enter the name of the new worksheet: ")
+    user_input = input("Enter the name of the new worksheet:\n")
     if validation.check_if_worksheet_exist(user_input) == False:
         print("Processing...")
         sheet_title = user_input
@@ -82,7 +91,7 @@ def delete_worksheet():
     """
     Function that delete worksheet from a spreadsheet
     """
-    user_input = input("Enter the worksheet name to delete: ")
+    user_input = input("Enter the worksheet name to delete:\n")
     words_to_check = get_all_worksheets_titles()
     try:
         worksheet_name = validation.validate_user_chosen_sheet(user_input, words_to_check)
@@ -112,7 +121,7 @@ def set_active_worksheet():
     """
     print_all_worksheets()
     try:
-        user_input = input("Enter the worksheet name that you will work on: ")
+        user_input = input("Enter the worksheet name that you will work on:\n")
         words_to_check = get_all_worksheets_titles()
         validated_input = validation.validate_user_chosen_sheet(user_input, words_to_check)
     except WorksheetNotFoundError:
@@ -123,14 +132,14 @@ def set_active_worksheet():
 
     else:
         config.current_worksheet = validated_input
-        print(f'Yay {validated_input}')
+        print(f'Current active worksheet: {validated_input}')
         return config.current_worksheet
 
 def duplicate_sheet():
     """
     Function that duplicates chosen sheet
     """
-    user_input = input("Enter the name of the sheet to copy: ")
+    user_input = input("Enter the name of the sheet to copy:\n")
     words_to_check = get_all_worksheets_titles()
     try:
         worksheet_name = validation.validate_user_chosen_sheet(user_input, words_to_check)
@@ -147,12 +156,12 @@ def rename_sheet():
     """
     Function that renames the chosen worksheet by the user.
     """
-    user_input = input("Enter the worksheet name to rename: ")
-    words_to_check = get_all_worksheets_titles()
-    validated_input = validation.validate_user_chosen_sheet(user_input, words_to_check)
-    user_input_new_name = input("Enter new worksheet name: ")
+    user_input = input("Enter the worksheet name to rename:\n")
+    user_input_new_name = input("Enter new worksheet name:\n")
     try:
         worksheet_exist = validation.check_if_worksheet_exist(user_input_new_name)
+        worksheets_to_check = get_all_worksheets_titles()
+        validated_input = validation.validate_user_chosen_sheet(user_input, worksheets_to_check)
     except WorksheetNotFoundError:
         print("Worksheet not found")
         return

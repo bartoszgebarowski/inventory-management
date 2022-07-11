@@ -1,9 +1,9 @@
-from app import worksheet,keys
+from app import worksheet
 
 
 while True:
-    print('Main menu')
-    user_input = input('User choice: ')
+    worksheet.print_menu()
+    user_input = input('User choice:\n')
     user_choice_lower = user_input.lower()
     if user_choice_lower == 'a':
         worksheet.print_all_worksheets()
@@ -14,8 +14,6 @@ while True:
     elif user_choice_lower == 's':
         worksheet.print_all_worksheets()
         worksheet.set_active_worksheet()
-    elif user_choice_lower == 'h':
-        worksheet.print_help()
     elif user_choice_lower == 'del':
         worksheet.print_all_worksheets()
         worksheet.delete_worksheet()

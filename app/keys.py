@@ -10,7 +10,7 @@ def get_user_keys() -> list:
     desired_range = choose_number_of_keys()
     if desired_range:
         for i in range(1, desired_range + 1):
-            chosen_keys.append(input(f"Enter key number {i}: "))
+            chosen_keys.append(input(f"Enter key number {i}:\n"))
     return chosen_keys
 
 
@@ -53,7 +53,7 @@ def choose_number_of_keys() -> int:
     """
     try:
         user_input_number_of_keys = int(
-            input("Enter how many keys do you want to use: ")
+            input("Enter how many keys do you want to use:\n")
         )
     except ValueError:
         print("Your input must be integer")
@@ -101,7 +101,7 @@ def get_user_new_keys() -> list:
 
     new_keys = []
     for i in range(1, current_keys_len + 1):
-        new_keys.append(input(f"Enter key number {i}: "))
+        new_keys.append(input(f"Enter key number {i}:\n"))
     return new_keys
 
 def update_multiple_sorting_keys():
@@ -132,7 +132,7 @@ def get_number_of_new_keys() -> int:
     """
     try:
         user_input_number_of_keys = int(
-            input("Enter how many keys do you want to add/update: ")
+            input("Enter how many keys do you want to add/update:\n")
         )
     except ValueError:
         print("Your input must be integer")
@@ -154,7 +154,7 @@ def input_new_keys(keys_number) -> list:
         print('No data')
     else:
         for i in range(1, keys_number + 1):
-            new_keys.append(input(f"Enter key number {i}: "))
+            new_keys.append(input(f"Enter key number {i}:\n"))
     return new_keys
 
 def set_new_keys():
@@ -189,8 +189,8 @@ def get_user_data_range() -> list:
     """
     numbers_to_display = []
     try:
-        start_number = int(input("Enter the starting number from 1 to 200: "))
-        end_number = int(input("Enter the end number from from 1 to 200: "))
+        start_number = int(input("Enter the starting number from 1 to 200:\n"))
+        end_number = int(input("Enter the end number from from 1 to 200:\n"))
     except ValueError:
         print("Not a number")
         return numbers_to_display
