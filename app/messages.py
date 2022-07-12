@@ -11,8 +11,9 @@ def print_menu():
     print("5. Duplicate worksheet: press 5")
     print("6. Print worksheet content: press 6")
     print("7. Remove all content from worksheet: press 7")
-    print("8. If you need help: press h or type help")
-    print("9. Exit the program: type q")
+    print("8. Add data sorting keys: press 8")
+    print("9. If you need help: press h or type help")
+    print("10. Exit the program: type q")
 
 
 def wait_in_seconds(time_to_wait: int):

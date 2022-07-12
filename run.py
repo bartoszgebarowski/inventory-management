@@ -1,4 +1,4 @@
-from app import worksheet, messages
+from app import worksheet, messages,keys
 
 
 while True:
@@ -31,6 +31,8 @@ while True:
     elif user_choice_lower == "7":
         worksheet.clear_worksheet()
         messages.wait_in_seconds(2)
+    elif user_choice_lower == '8':
+        keys.add_data_sorting_keys()
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
     elif user_choice_lower == "q":

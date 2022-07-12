@@ -1,18 +1,6 @@
-from app import validation
+from app import validation, worksheet
 from app import app_config as config
-
-
-def get_user_keys() -> list:
-    """
-    Function that returns keys chosen by user
-    """
-    print_keys()
-    chosen_keys = []
-    desired_range = choose_number_of_keys()
-    if desired_range:
-        for i in range(1, desired_range + 1):
-            chosen_keys.append(input(f"Enter key number {i}:\n"))
-    return chosen_keys
+import gspread
 
 
 def get_current_keys() -> list:
@@ -49,55 +37,8 @@ def print_keys():
         print("You have to set your data sorting keys first !")
     else:
         keys = get_current_keys()
-        data_to_print = " ".join(keys)
-        print(f"Data sorting keys: {data_to_print}")
-
-
-def choose_number_of_keys() -> int:
-    """
-    Function that will return the number of keys that the user want to use for data filtering
-    """
-    try:
-        user_input_number_of_keys = int(
-            input("Enter how many keys do you want to use:\n")
-        )
-    except ValueError:
-        print("Your input must be integer")
-        return 0
-    if user_input_number_of_keys == 0:
-        print("Zero cant be chosen")
-        return 0
-    current_keys = get_current_keys()
-    if validation.check_keys_for_duplicates(current_keys) == False:
-        print("You haven't set your data sorting keys")
-        return 0
-    if user_input_number_of_keys > len(current_keys):
-        print("You have chosen more keys than you currently have")
-        return 0
-    # TODO: change to raise custom error if number is incorrect
-    return int(user_input_number_of_keys)
-
-
-def filter_data_by_keys(value_split):
-    """
-    Function that will filter out the data by the chosen keys
-    """
-    user_keys = validation.validate_user_keys(get_user_keys())
-
-    worksheet = config.SHEET.worksheet(config.current_worksheet)
-    data = worksheet.get_all_records()
-    store = []
-    for item in data:
-        for key in user_keys:
-            store.append(item[key])
-    stringified = [str(int_) for int_ in store]
-    data_to_print = "\n".join(
-        [
-            " | ".join(stringified[i : i + value_split])
-            for i in range(0, len(stringified), value_split)
-        ]
-    )
-    print(data_to_print)
+        keys_to_print = " ".join(keys)
+        print(f"Data sorting keys: {keys_to_print}")
 
 
 def get_user_new_keys() -> list:
@@ -113,87 +54,42 @@ def get_user_new_keys() -> list:
     return new_keys
 
 
-def update_multiple_sorting_keys():
-    """
-    Function that updates existing data sorting keys
-    """
-    worksheet = config.SHEET.worksheet(config.current_worksheet)
-    user_keys = get_user_new_keys()
-    validated_keys = validation.check_input_if_first_char_is_space(user_keys)
-    duplication_validation = validation.check_keys_for_duplicates(user_keys)
-    if len(validated_keys) != len(user_keys):
-        print("Invalid input")
-    elif not duplication_validation:
-        print("Keys are not unique")
-    else:
-        print("Processing ...")
-        worksheet.batch_update(
-            [
-                {"range": "A1:F1", "values": [user_keys]},
-            ]
-        )
-        print("Keys were updated successfully")
+# TODO one function/ message identical, mssg 6 to user
 
-
-def get_number_of_new_keys() -> int:
+def get_number_of_new_keys_to_update() -> int:
     """
-    Function that returns a number of keys that user want to create
+    Function that returns a number of keys that user want to update
     """
-    try:
-        user_input_number_of_keys = int(
-            input("Enter how many keys do you want to add/update:\n")
-        )
-    except ValueError:
-        print("Your input must be integer")
-        return 0
-    if user_input_number_of_keys == 0:
-        print("Zero cant be chosen")
-        return 0
-    else:
-        return int(user_input_number_of_keys)
+    while True:
+        try:
+            keys_number = int(
+                input("Enter how many keys do you want to update:\n")
+            )
+            if keys_number > 7:
+                print("'You cant add more than 6 keys'")
+            elif keys_number == 0:
+                print("No data")
+            else:
+                return keys_number
+        except ValueError:
+            print("Your input must be integer")
 
-
-def input_new_keys(keys_number) -> list:
+def get_new_keys(keys_number) -> list:
     """
     Function that retuns list of inputs
     """
     new_keys = []
-    if keys_number > 6:
-        print("'You cant add more than 6 keys'")
-    elif keys_number == 0:
-        print("No data")
-    else:
+    while True:
         for i in range(1, keys_number + 1):
-            new_keys.append(input(f"Enter key number {i}:\n"))
-    return new_keys
-
-
-def set_new_keys():
-    """
-    Function that set new data sorting keys if none are present in the worksheet
-    """
-    worksheet = config.SHEET.worksheet(config.current_worksheet)
-    values_list = worksheet.row_values(1)
-    validated_keys = input_new_keys(get_number_of_new_keys())
-    evaluated_list = validation.check_input_if_first_char_is_space(validated_keys)
-    duplicate_check = validation.check_keys_for_duplicates(evaluated_list)
-    if len(values_list) >= 1:
-        print("You already have the keys.")
-    elif len(validated_keys) == 0:
-        print("Invalid data")
-    elif len(evaluated_list) != len(validated_keys):
-        print("Space as a first character is not allowed")
-    elif not duplicate_check:
-        print("Your keys are not unique")
-    else:
-        print("Processing ...")
-        worksheet.batch_update(
-            [
-                {"range": "A1:F1", "values": [validated_keys]},
-            ]
-        )
-        print("Keys were set successfully")
-
+            key_name = input(f"Enter key number {i}:\n")
+            key_name = worksheet.replace_space_with_underscore(key_name)
+            new_keys.append(key_name)
+        
+        if not validation.check_keys_for_duplicates(new_keys):
+            new_keys = []
+            print('Keys must be unique')
+            continue
+        return new_keys
 
 def get_user_data_range() -> list:
     """
@@ -239,3 +135,31 @@ def calculate_column_range(column_len: int) -> list:
         i = i + 1
         column_counter.append(f"C{i}")
     return column_counter
+    
+def add_data_sorting_keys():
+    """
+    Function that add new single key
+    """
+    try:
+        current_worksheet = config.SHEET.worksheet(config.current_worksheet)
+    except gspread.exceptions.WorksheetNotFound:
+        print('No worksheet was set')
+    else: 
+        number_of_keys = get_number_of_new_keys_to_update()
+        keys_candidate = get_new_keys(number_of_keys)
+
+        if len(keys_candidate) == 0:
+            print("Invalid data")
+        elif range == 0:
+            "No keys"
+        while len(keys_candidate) < 6:
+            keys_candidate.append('')
+        else:
+            print("Processing ...")
+            current_worksheet.batch_update(
+                [
+                    {"range": 'A1:F1', "values": [keys_candidate]},
+                ]
+                )
+            print("New data sorting key/keys was/were successfully added !")
+
