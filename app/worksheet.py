@@ -3,6 +3,7 @@ from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
 import pandas as pd
+import gspread.exceptions
 
 
 def get_all_worksheets_titles() -> list:
@@ -72,19 +73,17 @@ def add_worksheet():
     Function that adds a worksheet to a spreadsheet
     """
     user_input = input("Enter the name of the new worksheet:\n")
-    my_var = 1
-    if my_var == 1:
-        pass
-    elif validation.check_if_worksheet_exist(user_input) == False:
+    if validation.check_if_worksheet_exist(user_input) == False:
         print("Processing...")
         sheet_title = user_input
         config.SHEET.add_worksheet(title=sheet_title, rows=200, cols=6)
-        print("SHEET successfully added !")
+        print(f"Worksheet with the name {user_input} was successfully added to the spreadsheet!")
     else:
         print("You cant add the sheet with the same name")
 
 
 def delete_worksheet():
+    #TODO confirmation
     """
     Function that delete worksheet from a spreadsheet
     """
@@ -177,7 +176,7 @@ def rename_sheet():
     if (
         not worksheet_exist
         and len(user_input_new_name) > 0
-        and not validated_input == get_all_worksheets_titles()[0]
+        and not validated_input == worksheets_to_check[0]
     ):
         print("Processing ...")
         index = get_sheet_index(validated_input)
@@ -201,16 +200,22 @@ def print_worksheet_content():
     """
     Function that prints current worksheet content
     """
-    # TODO what if empty
-    if not validation.check_active_worksheet():
-        print("No active worksheet was selected.")
-    else:
+    try:
         worksheet = config.SHEET.worksheet(config.current_worksheet)
+    except gspread.exceptions.WorksheetNotFound:
+        print('No active worksheet was selected')
+        return
+    else:
         worksheet_data = worksheet.get_all_values()
-        data_to_print = tabulate(
-            worksheet_data, headers="firstrow", numalign="center", stralign="center"
-        )
-        print(data_to_print)
+        if len(worksheet_data) == 0:
+            print("Can't print empty worksheet")
+        else:
+            
+            print(worksheet_data)
+            data_to_print = tabulate(
+                worksheet_data, headers="firstrow", numalign="center", stralign="center"
+            )
+            print(data_to_print)
 
 
 def clear_worksheet():

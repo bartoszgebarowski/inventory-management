@@ -3,13 +3,13 @@ from app import app_config as config
 from app import worksheet, keys
 
 
-def validate_user_chosen_sheet(input_candidate: str, words_to_check: list) -> str:
+def validate_user_chosen_sheet(input_candidate: str, worksheets_to_check: list) -> str:
     """
     Function that checks if user input exist as a worksheet
     """
     user_input_lower = input_candidate.lower()
     worksheets_names = [
-        word for word in words_to_check if word.lower() == user_input_lower
+        worksheet for worksheet in worksheets_to_check if worksheet.lower() == user_input_lower
     ]
     try:
         return worksheets_names[0]
@@ -22,16 +22,16 @@ def check_if_worksheet_exist(input_candidate) -> bool:
     Function that checks if worksheet exist
     """
     user_input_lower = input_candidate.lower()
-    words_to_check = worksheet.get_all_worksheets_titles()
+    worksheets_to_check = worksheet.get_all_worksheets_titles()
     worksheets_names = [
-        word for word in words_to_check if word.lower() == user_input_lower
+        worksheet for worksheet in worksheets_to_check if worksheet.lower() == user_input_lower
     ]
     return bool(worksheets_names)
 
 
 def check_active_worksheet():
     """
-    Funtion that checks if active worksheet was selected
+    Function that checks if active worksheet was selected
     """
     if config.current_worksheet is None:
         return False
