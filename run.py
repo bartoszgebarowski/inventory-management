@@ -33,7 +33,6 @@ while True:
         messages.wait_in_seconds(2)
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
-        messages.wait_in_seconds(20)
     elif user_choice_lower == "q":
         print("Exit the program. Thanks for using Inventory Management !")
         break

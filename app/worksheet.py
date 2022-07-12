@@ -1,4 +1,4 @@
-from app import validation, keys
+from app import validation, keys, messages
 from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
@@ -68,22 +68,22 @@ def get_sheet_index(validated_input: str) -> int:
 
 
 def add_worksheet():
-    # TODO validation no spaces, special signs
     """
     Function that adds a worksheet to a spreadsheet
     """
     user_input = input("Enter the name of the new worksheet:\n")
     if validation.check_if_worksheet_exist(user_input) == False:
         print("Processing...")
-        sheet_title = user_input
-        config.SHEET.add_worksheet(title=sheet_title, rows=200, cols=6)
-        print(f"Worksheet with the name {user_input} was successfully added to the spreadsheet!")
+        worksheet_title = replace_space_with_underscore(user_input)
+        config.SHEET.add_worksheet(title=worksheet_title, rows=200, cols=6)
+        print(
+            f"Worksheet with the name {worksheet_title} was successfully added to the spreadsheet!"
+        )
     else:
         print("You cant add the sheet with the same name")
 
 
 def delete_worksheet():
-    #TODO confirmation
     """
     Function that delete worksheet from a spreadsheet
     """
@@ -96,7 +96,9 @@ def delete_worksheet():
     except WorksheetNotFoundError:
         print("Worksheet not found")
         return
-    if (
+    if not messages.user_confirmation():
+        print("Operation cancelled")
+    elif (
         len(get_all_worksheets_titles()) > 1
         and not worksheet_name == get_all_worksheets_titles()[0]
     ):
@@ -141,16 +143,18 @@ def duplicate_sheet():
     Function that duplicates chosen sheet
     """
     user_input = input("Enter the name of the sheet to copy:\n")
-    words_to_check = get_all_worksheets_titles()
+    worksheets_to_check = get_all_worksheets_titles()
     try:
         worksheet_name = validation.validate_user_chosen_sheet(
-            user_input, words_to_check
+            user_input, worksheets_to_check
         )
         print("Processing ...")
         sheet_id = get_all_worksheets_titles_with_id()[worksheet_name][0]
         sheet_index = sheet_new_index(worksheet_name)
         config.SHEET.duplicate_sheet(
-            source_sheet_id=sheet_id, insert_sheet_index=sheet_index
+            source_sheet_id=sheet_id,
+            insert_sheet_index=sheet_index,
+            new_sheet_name=f"Copy_of_{worksheet_name}",
         )
         print("Worksheet successfully duplicated !")
     except WorksheetNotFoundError:
@@ -203,14 +207,14 @@ def print_worksheet_content():
     try:
         worksheet = config.SHEET.worksheet(config.current_worksheet)
     except gspread.exceptions.WorksheetNotFound:
-        print('No active worksheet was selected')
+        print("No active worksheet was selected")
         return
     else:
         worksheet_data = worksheet.get_all_values()
         if len(worksheet_data) == 0:
             print("Can't print empty worksheet")
         else:
-            
+
             print(worksheet_data)
             data_to_print = tabulate(
                 worksheet_data, headers="firstrow", numalign="center", stralign="center"
@@ -222,9 +226,10 @@ def clear_worksheet():
     """
     Function that removes clears the worksheet from all values
     """
-    # TODO confirmation if user want to do this
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
+    elif not messages.user_confirmation():
+        print("Operation cancelled")
     else:
         worksheet = config.SHEET.worksheet(config.current_worksheet)
         print("Processing ...")
@@ -255,3 +260,11 @@ def indexed_table(user_range):
             columns=pd.Index(column_counter),
         )
         print(data_indexed)
+
+
+def replace_space_with_underscore(string_to_evaluate: str) -> str:
+    """
+    Function that will replace spaces with underscore
+    """
+    string_to_return = string_to_evaluate.replace(" ", "_")
+    return string_to_return

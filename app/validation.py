@@ -9,7 +9,9 @@ def validate_user_chosen_sheet(input_candidate: str, worksheets_to_check: list) 
     """
     user_input_lower = input_candidate.lower()
     worksheets_names = [
-        worksheet for worksheet in worksheets_to_check if worksheet.lower() == user_input_lower
+        worksheet
+        for worksheet in worksheets_to_check
+        if worksheet.lower() == user_input_lower
     ]
     try:
         return worksheets_names[0]
@@ -24,7 +26,9 @@ def check_if_worksheet_exist(input_candidate) -> bool:
     user_input_lower = input_candidate.lower()
     worksheets_to_check = worksheet.get_all_worksheets_titles()
     worksheets_names = [
-        worksheet for worksheet in worksheets_to_check if worksheet.lower() == user_input_lower
+        worksheet
+        for worksheet in worksheets_to_check
+        if worksheet.lower() == user_input_lower
     ]
     return bool(worksheets_names)
 

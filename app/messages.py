@@ -28,3 +28,18 @@ def help():
     Function that will print out the
     """
     print("HELP MENU")
+    input("Press any key to leave the help submenu:\n")
+
+
+def user_confirmation() -> bool:
+    """
+    Function that will prompt the user for confirming the action
+    """
+    user_input = input(
+        "Are you sure ? Press y to confirm, or any other key to cancel the operation:\n"
+    )
+    user_input_lower = user_input.lower()
+    if user_input_lower == "y":
+        return True
+    else:
+        return False
