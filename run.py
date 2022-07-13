@@ -36,6 +36,8 @@ while True:
     elif user_choice_lower == "9":
         rows.append_rows(rows.get_user_new_row(), rows.get_last_row_number())
         messages.wait_in_seconds(2)
+    elif user_choice_lower == "10":
+        rows.indexed_table()
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
     elif user_choice_lower == "q" or user_choice_lower == "quit":

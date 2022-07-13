@@ -1,52 +1,7 @@
-from app import keys, worksheet, messages
+from app import keys, worksheet, messages, validation
 import gspread
 from app import app_config as config
-
-
-def get_user_data_range() -> list:
-    """
-    Function that get the range of records to display in the table
-    """
-    numbers_to_display = []
-    try:
-        start_number = int(input("Enter the starting number from 1 to 200:\n"))
-        end_number = int(input("Enter the end number from from 1 to 200:\n"))
-    except ValueError:
-        print("Not a number")
-        return numbers_to_display
-
-    if start_number <= 0 or start_number > 200:
-        print("Invalid range")
-
-    elif end_number <= 0 or end_number > 200:
-        print("Invalid range")
-
-    else:
-        numbers_to_display.append(start_number)
-        numbers_to_display.append(end_number)
-    return numbers_to_display
-
-
-def calculate_row_range(user_input: int, row_len: int) -> list:
-    """
-    Function that calculates the required amount of indexes and returns them in the list
-    """
-    row_counter = []
-    for i in range(row_len):
-        i = i + 1
-        row_counter.append(f"R{i + user_input -1}")
-    return row_counter
-
-
-def calculate_column_range(column_len: int) -> list:
-    """
-    Function that calculates the required amount of columns and returns them in the list
-    """
-    column_counter = []
-    for i in range(column_len):
-        i = i + 1
-        column_counter.append(f"C{i}")
-    return column_counter
+import pandas as pd
 
 
 def get_last_row_number() -> int:
@@ -95,17 +50,83 @@ def get_user_new_row() -> list:
 
 
 def append_rows(user_row_candidate, row_number):
+    """
+    Function that append data to the next row in the worksheet
+    """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
     except gspread.exceptions.WorksheetNotFound:
         return
+    prompt_user = messages.user_confirmation()
+    if prompt_user:
+        print("Processing ...")
+        current_worksheet.append_row(user_row_candidate, table_range=f"A{row_number}")
+        print("Data added successfully !")
     else:
-        prompt_user = messages.user_confirmation()
-        if prompt_user:
-            print("Processing ...")
-            current_worksheet.append_row(
-                user_row_candidate, table_range=f"A{row_number}"
-            )
-            print("Data added successfully !")
-        else:
-            print("Operation cancelled")
+        print("Operation cancelled")
+
+
+def get_user_data_range() -> tuple:
+    """
+    Function that get the range of records to display in the table
+    """
+    while True:
+        try:
+            start_number = int(input("Enter the starting number from 1 to 200:\n"))
+            end_number = int(input("Enter the end number from from 1 to 200:\n"))
+        except ValueError:
+            print("Not a number")
+            continue
+        if (
+            start_number <= 0
+            or end_number <= 0
+            or start_number > 200
+            or end_number > 200
+        ):
+            print("Invalid range")
+            continue
+        return start_number - 1, end_number
+
+
+def calculate_row_range(user_input: int, row_len: int) -> list:
+    """
+    Function that calculates the required amount of indexes and returns them in the list
+    """
+    row_counter = []
+    for i in range(1, row_len + 1):
+        i = i + 1
+        row_counter.append(f"R{i + user_input -1}")
+    return row_counter
+
+
+def calculate_column_range(column_len: int) -> list:
+    """
+    Function that calculates the required amount of columns and returns them in the list
+    """
+    column_counter = []
+    for i in range(column_len):
+        i = i + 1
+        column_counter.append(f"C{i}")
+    return column_counter
+
+
+def indexed_table():
+    """
+    Function that prints current worksheet content, with columns and rows symbols in a desired range
+    """
+    start_data_index, end_data_index = get_user_data_range()
+    if not validation.check_active_worksheet():
+        print("No active worksheet was selected.")
+        return
+    worksheet = config.SHEET.worksheet(config.current_worksheet)
+    actual_worksheet_data = worksheet.get_all_values()
+    worksheet_data = actual_worksheet_data[start_data_index:end_data_index]
+    row_counter = calculate_row_range(start_data_index, len(worksheet_data))
+    column_counter = calculate_column_range(len(keys.get_current_keys()))
+    pd.set_option("display.max_rows", 200)
+    data_indexed = pd.DataFrame(
+        worksheet_data,
+        index=pd.Index(row_counter),
+        columns=pd.Index(column_counter),
+    )
+    print(data_indexed)
