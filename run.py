@@ -38,6 +38,8 @@ while True:
         messages.wait_in_seconds(2)
     elif user_choice_lower == "10":
         rows.indexed_table()
+        rows.update_cell()
+        messages.wait_in_seconds(2)
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
     elif user_choice_lower == "q" or user_choice_lower == "quit":

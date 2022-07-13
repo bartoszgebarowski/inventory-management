@@ -2,7 +2,6 @@ from app import validation, keys, messages, rows
 from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
-import pandas as pd
 import gspread.exceptions
 
 
@@ -236,30 +235,6 @@ def clear_worksheet():
         worksheet.clear()
         print("The worksheet was successfully cleared")
         print("Remember to set new data sorting keys, before moving on !")
-
-
-def indexed_table(user_range):
-    """
-    Function that prints current worksheet content, with columns and rows symbols in a desired range
-    """
-    if not validation.check_active_worksheet():
-        print("No active worksheet was selected.")
-    elif len(user_range) == 0:
-        print("No range available")
-    # TODO : deal with situation when there is no data in that range
-    else:
-        worksheet = config.SHEET.worksheet(config.current_worksheet)
-        worksheet_data = worksheet.get_all_values()[user_range[0] - 1 : user_range[1]]
-        print(worksheet_data)
-        row_counter = rows.calculate_row_range(user_range[0], len(worksheet_data))
-        column_counter = rows.calculate_column_range(len(keys.get_current_keys()))
-        pd.set_option("display.max_rows", 200)
-        data_indexed = pd.DataFrame(
-            worksheet_data,
-            index=pd.Index(row_counter),
-            columns=pd.Index(column_counter),
-        )
-        print(data_indexed)
 
 
 def replace_space_with_underscore(string_to_evaluate: str) -> str:

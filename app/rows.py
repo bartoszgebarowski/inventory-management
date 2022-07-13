@@ -130,3 +130,45 @@ def indexed_table():
         columns=pd.Index(column_counter),
     )
     print(data_indexed)
+
+
+def get_user_cell_to_update() -> tuple:
+    """
+    Function that ask user for a coordinates of the cell he wants to update
+    """
+    print('If you want to change the data sorting keys, use the add data sorting keys from the menu')
+    while True:
+        try:
+            row_number = int(input("Enter the row number from 2 to 200:\n"))
+            column_number = int(input("Enter the column number from from 1 to 6:\n"))
+        except ValueError:
+            print("Not a number")
+            continue
+        if (
+            row_number < 2
+            or column_number <= 0
+            or row_number > 200
+            or column_number > 6
+        ):
+            print("Invalid range. Please try again.")
+            continue
+        return row_number, column_number
+
+
+def update_cell():
+    "Function that update the cell with new value"
+    if not validation.check_active_worksheet():
+        return
+    row_number, column_number = get_user_cell_to_update()
+    user_input = input("Enter value for a cell: \n")
+    print("Processing ...")
+    print(
+        f"Cell with row number {row_number} in column {column_number} will be updated with {user_input} value"
+    )
+    user_confirmation = messages.user_confirmation()
+    if user_confirmation:
+        worksheet = config.SHEET.worksheet(config.current_worksheet)
+        worksheet.update_cell(row_number, column_number, user_input)
+        print("Cell was successfully updated!")
+    else:
+        print("Operation aborted")
