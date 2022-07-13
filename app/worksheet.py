@@ -1,4 +1,4 @@
-from app import validation, keys, messages
+from app import validation, keys, messages, rows
 from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
@@ -251,8 +251,8 @@ def indexed_table(user_range):
         worksheet = config.SHEET.worksheet(config.current_worksheet)
         worksheet_data = worksheet.get_all_values()[user_range[0] - 1 : user_range[1]]
         print(worksheet_data)
-        row_counter = keys.calculate_row_range(user_range[0], len(worksheet_data))
-        column_counter = keys.calculate_column_range(len(keys.get_current_keys()))
+        row_counter = rows.calculate_row_range(user_range[0], len(worksheet_data))
+        column_counter = rows.calculate_column_range(len(keys.get_current_keys()))
         pd.set_option("display.max_rows", 200)
         data_indexed = pd.DataFrame(
             worksheet_data,

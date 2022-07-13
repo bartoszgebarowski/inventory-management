@@ -86,5 +86,6 @@ def check_input_if_first_char_is_space(new_keys_candidate) -> list:
     else:
         return evaluated_list
 
+
 def validate_keys():
     pass

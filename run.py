@@ -1,4 +1,4 @@
-from app import worksheet, messages,keys
+from app import worksheet, messages, keys, rows
 
 
 while True:
@@ -31,11 +31,14 @@ while True:
     elif user_choice_lower == "7":
         worksheet.clear_worksheet()
         messages.wait_in_seconds(2)
-    elif user_choice_lower == '8':
+    elif user_choice_lower == "8":
         keys.add_data_sorting_keys()
+    elif user_choice_lower == "9":
+        rows.append_rows(rows.get_user_new_row(), rows.get_last_row_number())
+        messages.wait_in_seconds(2)
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
-    elif user_choice_lower == "q":
+    elif user_choice_lower == "q" or user_choice_lower == "quit":
         print("Exit the program. Thanks for using Inventory Management !")
         break
     else:
