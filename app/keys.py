@@ -73,7 +73,7 @@ def get_number_of_new_keys_to_update() -> int:
 
 def get_new_keys(keys_number) -> list:
     """
-    Function that retuns list of inputs
+    Function that returns list of inputs
     """
     new_keys = []
     while True:

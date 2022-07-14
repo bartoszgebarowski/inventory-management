@@ -14,8 +14,9 @@ def print_menu():
     print("8. Add data sorting keys: press 8")
     print("9. Add row of data to a worksheet: press 9")
     print("10. Modify a single cell in a worksheet: press 10")
-    print("11. If you need help: press h or type help")
-    print("12. Exit the program: type q or quit")
+    print("11. Modify a single row in a worksheet: press 11")
+    print("12. If you need help: press h or type help")
+    print("13. Exit the program: type q or quit")
 
 
 def wait_in_seconds(time_to_wait: int):
