@@ -84,9 +84,7 @@ def help() -> None:
             print(
                 "This option allows to delete a worksheet in a Inventory Management spreadsheet."
             )
-            print(
-                "To delete a worksheet, the user must pick the worksheet's name."
-            )
+            print("To delete a worksheet, the user must pick the worksheet's name.")
             print("Template worksheet cannot be chosen in this step.")
             input("Press any key to leave the submenu:\n")
             continue

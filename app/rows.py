@@ -49,13 +49,15 @@ def get_user_new_row() -> list:
         return new_row
 
 
-def append_rows(user_row_candidate, row_number) -> None:
+def append_rows(user_row_candidate: list, row_number: int) -> None:
     """
     Function that append data to the next row in the worksheet
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
     except gspread.exceptions.WorksheetNotFound:
+        return
+    if len(keys.get_current_keys()) == 0:
         return
     prompt_user = messages.user_confirmation()
     if prompt_user:
@@ -91,6 +93,7 @@ def get_user_data_range() -> tuple:
 def calculate_row_range(user_input: int, row_len: int) -> list:
     """
     Function that calculates the required amount of indexes and returns them in the list
+     Return format example: ['R1', 'R2']
     """
     row_counter = []
     for i in range(1, row_len + 1):

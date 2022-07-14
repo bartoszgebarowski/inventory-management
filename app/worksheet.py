@@ -213,8 +213,6 @@ def print_worksheet_content() -> None:
         if len(worksheet_data) == 0:
             print("Can't print empty worksheet")
         else:
-
-            print(worksheet_data)
             data_to_print = tabulate(
                 worksheet_data, headers="firstrow", numalign="center", stralign="center"
             )
