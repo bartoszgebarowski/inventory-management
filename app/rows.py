@@ -28,9 +28,9 @@ def get_user_new_row() -> list:
         print("No worksheet was set")
         return new_row
     current_keys = keys.get_current_keys()
-    current_keys_length = len(current_keys)
+    updated_keys_len = len(keys.remove_empty_string_from_keys(current_keys))
     last_row_of_data = get_last_row_number()
-    if current_keys_length == 0:
+    if updated_keys_len == 0:
         print("Set your data sorting keys first !")
         return new_row
     elif last_row_of_data > 200:
@@ -40,7 +40,7 @@ def get_user_new_row() -> list:
         return new_row
     else:
         print(f"You will add the data to row: {last_row_of_data}")
-        for i in range(1, current_keys_length + 1):
+        for i in range(1, updated_keys_len + 1):
             new_cell_value = input(
                 f"Enter value for cell {i} in row {last_row_of_data}:\n"
             )
@@ -131,7 +131,7 @@ def indexed_table() -> None:
         columns=pd.Index(column_counter),
     )
     if data_indexed.empty:
-        print(f'Your table is empty in range {start_data_index+1} to {end_data_index}')
+        print(f"Your table is empty in range {start_data_index+1} to {end_data_index}")
     else:
         print(data_indexed)
 
@@ -140,7 +140,9 @@ def get_user_cell_to_update() -> tuple:
     """
     Function that ask user for a coordinates of the cell he wants to update
     """
-    print('If you want to change the data sorting keys, use the add data sorting keys from the menu')
+    print(
+        "If you want to change the data sorting keys, use the add data sorting keys from the menu"
+    )
     while True:
         try:
             row_number = int(input("Enter the row number from 2 to 200:\n"))
@@ -167,7 +169,7 @@ def update_cell() -> None:
         return
     current_keys = keys.get_current_keys()
     if len(current_keys) == 0:
-        print('You have to set your data sorting keys first')
+        print("You have to set your data sorting keys first")
         return
     row_number, column_number = get_user_cell_to_update()
     user_input = input("Enter value for a cell: \n")
@@ -184,25 +186,24 @@ def update_cell() -> None:
     else:
         print("Operation aborted")
 
+
 def get_user_row_to_update() -> int:
     """
     Function that ask user for a coordinates of the cell he wants to update
     """
-    print('If you want to change the data sorting keys, use the add data sorting keys from the menu')
+    print(
+        "If you want to change the data sorting keys, use the add data sorting keys from the menu"
+    )
     while True:
         try:
             row_number = int(input("Enter the row number from 2 to 200:\n"))
         except ValueError:
             print("Not a number")
             continue
-        if (
-            row_number < 2
-            or row_number > 200
-        ):
+        if row_number < 2 or row_number > 200:
             print("Invalid range. Please try again.")
             continue
         return row_number
-
 
 
 def get_user_value_for_each_cell() -> list:
@@ -210,12 +211,14 @@ def get_user_value_for_each_cell() -> list:
     Function that returns list of values for new row
     """
     new_row_value = []
-    keys_number = len(keys.get_current_keys())
-    for cell in range(1, keys_number + 1):
+    keys_number = keys.get_current_keys()
+    updated_keys_len = len(keys.remove_empty_string_from_keys(keys_number))
+    for cell in range(1, updated_keys_len + 1):
         cell_value = input(f"Enter value for cell value {cell}:\n")
         cell_value = worksheet.replace_space_with_underscore(cell_value)
         new_row_value.append(cell_value)
     return new_row_value
+
 
 def update_row() -> None:
     """
@@ -225,24 +228,22 @@ def update_row() -> None:
         return
     current_keys = keys.get_current_keys()
     if len(current_keys) == 0:
-        print('You have to set your data sorting keys first')
+        print("You have to set your data sorting keys first")
         return
     print(len(current_keys))
     row_number = get_user_row_to_update()
     user_values = get_user_value_for_each_cell()
-    user_values_formatted = ', '.join(user_values)
+    user_values_formatted = ", ".join(user_values)
     print("Processing ...")
-    print(
-        f"Row {row_number} will be updated with {user_values_formatted} values"
-    )
+    print(f"Row {row_number} will be updated with {user_values_formatted} values")
     user_confirmation = messages.user_confirmation()
     if user_confirmation:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
         current_worksheet.batch_update(
-                [
-                    {"range": f'A{row_number}:F{row_number}', "values": [user_values]},
-                ]
-            )
+            [
+                {"range": f"A{row_number}:F{row_number}", "values": [user_values]},
+            ]
+        )
         print("Row was successfully updated !")
     else:
         print("Operation aborted")

@@ -47,7 +47,7 @@ while True:
     elif user_choice_lower == "h" or user_choice_lower == "help":
         messages.help()
     elif user_choice_lower == "q" or user_choice_lower == "quit":
-        print("Exit the program. Thanks for using Inventory Management !")
+        print("Thanks for using Inventory Management !")
         break
     else:
         print("Input not recognized. Please try again.")

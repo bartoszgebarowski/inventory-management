@@ -24,7 +24,7 @@ def get_current_keys() -> list:
         return keys
 
 
-def print_keys():
+def print_keys() -> None:
     """
     Function that will print out the data sorting keys
     """
@@ -61,8 +61,8 @@ def get_number_of_new_keys_to_update() -> int:
     while True:
         try:
             keys_number = int(input("Enter how many keys do you want to update:\n"))
-            if keys_number > 7:
-                print("'You cant add more than 6 keys'")
+            if keys_number > 6:
+                print("You cant add more than 6 keys")
             elif keys_number == 0:
                 print("Nothing will be altered !")
             else:
@@ -89,7 +89,7 @@ def get_new_keys(keys_number) -> list:
         return new_keys
 
 
-def add_data_sorting_keys():
+def add_data_sorting_keys() -> None:
     """
     Function that add new single key
     """
@@ -114,3 +114,11 @@ def add_data_sorting_keys():
                 ]
             )
             print("New data sorting key/keys was/were successfully added !")
+
+
+def remove_empty_string_from_keys(keys: list) -> list:
+    """
+    Function that will remove the empty strings from the list
+    """
+    keys = [item for item in keys if item != ""]
+    return keys

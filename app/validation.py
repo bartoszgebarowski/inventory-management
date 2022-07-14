@@ -2,7 +2,7 @@ from app.errors import WorksheetNotFoundError
 from app import app_config as config
 from app import worksheet, keys
 
-# TODO remove underscores
+
 def validate_user_chosen_sheet(input_candidate: str, worksheets_to_check: list) -> str:
     """
     Function that checks if user input exist as a worksheet
@@ -19,7 +19,7 @@ def validate_user_chosen_sheet(input_candidate: str, worksheets_to_check: list) 
         raise WorksheetNotFoundError
 
 
-def check_if_worksheet_exist(input_candidate) -> bool:
+def check_if_worksheet_exist(input_candidate: str) -> bool:
     """
     Function that checks if worksheet exist
     """
@@ -33,7 +33,7 @@ def check_if_worksheet_exist(input_candidate) -> bool:
     return bool(worksheets_names)
 
 
-def check_active_worksheet():
+def check_active_worksheet() -> bool:
     """
     Function that checks if active worksheet was selected
     """
@@ -72,20 +72,3 @@ def validate_user_keys(keys_candidate) -> list:
         print("Keys do not match")
         validated_keys = []
         return validated_keys
-
-
-def check_input_if_first_char_is_space(new_keys_candidate) -> list:
-    """
-    Function that check if first character in item is a space and returns a list without items, that are starting with space
-    """
-    try:
-        evaluated_list = [item for item in new_keys_candidate if item[0] != " "]
-    except IndexError:
-        evaluated_list = []
-        return evaluated_list
-    else:
-        return evaluated_list
-
-
-def validate_keys():
-    pass

@@ -27,7 +27,7 @@ def get_all_worksheets_titles_with_id() -> dict:
     return worksheets_titles_with_id
 
 
-def print_all_worksheets():
+def print_all_worksheets() -> None:
     """
     Function that prints all worksheets in the spreadsheet to the terminal
     """
@@ -66,7 +66,7 @@ def get_sheet_index(validated_input: str) -> int:
     return index
 
 
-def add_worksheet():
+def add_worksheet() -> None:
     """
     Function that adds a worksheet to a spreadsheet
     """
@@ -82,7 +82,7 @@ def add_worksheet():
         print("You cant add the sheet with the same name")
 
 
-def delete_worksheet():
+def delete_worksheet() -> None:
     """
     Function that delete worksheet from a spreadsheet
     """
@@ -115,7 +115,7 @@ def delete_worksheet():
         print("Could not remove worksheet")
 
 
-def set_active_worksheet():
+def set_active_worksheet() -> None | str:
     """
     Function that will change the active worksheet
     """
@@ -137,7 +137,7 @@ def set_active_worksheet():
         return config.current_worksheet
 
 
-def duplicate_sheet():
+def duplicate_sheet() -> None:
     """
     Function that duplicates chosen sheet
     """
@@ -161,7 +161,7 @@ def duplicate_sheet():
         return
 
 
-def rename_sheet():
+def rename_sheet() -> None:
     """
     Function that renames the chosen worksheet by the user.
     """
@@ -199,7 +199,7 @@ def rename_sheet():
         print(f"Worksheet with name {validated_input} already exist !")
 
 
-def print_worksheet_content():
+def print_worksheet_content() -> None:
     """
     Function that prints current worksheet content
     """
@@ -221,7 +221,7 @@ def print_worksheet_content():
             print(data_to_print)
 
 
-def clear_worksheet():
+def clear_worksheet() -> None:
     """
     Function that removes clears the worksheet from all values
     """
