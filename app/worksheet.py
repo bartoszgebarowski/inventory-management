@@ -1,4 +1,4 @@
-from app import validation,messages
+from app import validation, messages
 from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
@@ -76,7 +76,8 @@ def add_worksheet() -> None:
         worksheet_title = replace_space_with_underscore(user_input)
         config.SHEET.add_worksheet(title=worksheet_title, rows=200, cols=6)
         print(
-            f"Worksheet with the name {worksheet_title} was successfully added to the spreadsheet!"
+            f"Worksheet with the name {worksheet_title} was successfully added"
+            " to the spreadsheet!"
         )
     else:
         print("You cant add the sheet with the same name")

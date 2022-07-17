@@ -35,7 +35,8 @@ def get_user_new_row() -> list:
         return new_row
     elif last_row_of_data > 200:
         print(
-            "You can't add more data. Please, modify the data accordingly or make another worksheet"
+            "You can't add more data. Please, modify the data accordingly or"
+            " make another worksheet"
         )
         return new_row
     else:
@@ -100,8 +101,8 @@ def get_user_data_range() -> tuple:
 
 def calculate_row_range(user_input: int, row_len: int) -> list:
     """
-    Function that calculates the required amount of indexes and returns them in the list
-     Return format example: ['R1', 'R2']
+    Function that calculates the required amount of indexes and returns them
+    in the list. Return format example: ['R1', 'R2']
     """
     row_counter = []
     for i in range(1, row_len + 1):
@@ -124,7 +125,8 @@ def calculate_column_range(column_len: int) -> list:
 
 def indexed_table() -> None:
     """
-    Function that prints current worksheet content, with columns and rows symbols in a desired range
+    Function that prints current worksheet content, with columns and rows
+    symbols in a desired range
     """
     start_data_index, end_data_index = get_user_data_range()
     if not validation.check_active_worksheet():
@@ -143,7 +145,8 @@ def indexed_table() -> None:
     )
     if data_indexed.empty:
         print(
-            f"Your table is empty in range {start_data_index+1} to {end_data_index}"
+            f"Your table is empty in range {start_data_index+1} to"
+            f" {end_data_index}"
         )
     else:
         print(data_indexed)
@@ -154,7 +157,8 @@ def get_user_cell_to_update() -> tuple:
     Function that ask user for a coordinates of the cell he wants to update
     """
     print(
-        "If you want to change the data sorting keys, use the add data sorting keys from the menu"
+        "If you want to change the data sorting keys, use the add data sorting"
+        " keys from the menu"
     )
     while True:
         try:
@@ -191,7 +195,8 @@ def update_cell() -> None:
     cell_candidate = worksheet.replace_space_with_underscore(user_input)
     print("Processing ...")
     print(
-        f"Cell with row number {row_number} in column {column_number} will be updated with {cell_candidate} value"
+        f"Cell with row number {row_number} in column {column_number} will be"
+        f" updated with {cell_candidate} value"
     )
     user_confirmation = messages.user_confirmation()
     if user_confirmation:
@@ -209,7 +214,8 @@ def get_user_row_to_update() -> int:
     Function that ask user for a coordinates of the cell he wants to update
     """
     print(
-        "If you want to change the data sorting keys, use the add data sorting keys from the menu"
+        "If you want to change the data sorting keys, use the add data sorting"
+        " keys from the menu"
     )
     while True:
         try:

@@ -49,10 +49,12 @@ def help() -> None:
         user_choice_lower = user_input.lower()
         if user_choice_lower == "1":
             print(
-                "This option allows setting a worksheet that user wants to work with"
+                "This option allows setting a worksheet that user wants to"
+                " work with"
             )
             print(
-                "If this option is not chosen, adding, modifying or presenting data in options"
+                "If this option is not chosen, adding, modifying or presenting"
+                " data in options"
             )
             print("- add data sorting keys")
             print("- print worksheet content ")
@@ -65,18 +67,21 @@ def help() -> None:
             continue
         elif user_choice_lower == "2":
             print(
-                "This option allows to add a worksheet to a Inventory Management spreadsheet."
+                "This option allows to add a worksheet to a Inventory"
+                " Management spreadsheet."
             )
             print("For a worksheet to be created, its name must be unique.")
             print("Spaces will be replaced with underscore for clarity.")
             print(
-                "New worksheet will have 6 columns and 200 rows for user disposal."
+                "New worksheet will have 6 columns and 200 rows for user"
+                " disposal."
             )
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "3":
             print(
-                "This option allows to rename a worksheet in a Inventory Management spreadsheet."
+                "This option allows to rename a worksheet in a Inventory"
+                " Management spreadsheet."
             )
             print("First, the user needs to choose a worksheet to rename.")
             print("Next, the user needs to pick a new name for a worksheet.")
@@ -86,23 +91,28 @@ def help() -> None:
             continue
         elif user_choice_lower == "4":
             print(
-                "This option allows to delete a worksheet in a Inventory Management spreadsheet."
+                "This option allows to delete a worksheet in a Inventory"
+                " Management spreadsheet."
             )
             print(
-                "To delete a worksheet, the user must pick the worksheet's name."
+                "To delete a worksheet, the user must pick the worksheet's"
+                " name."
             )
             print("Template worksheet cannot be chosen in this step.")
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "5":
             print(
-                "This option allows to duplicate a worksheet in a Inventory Management spreadsheet."
+                "This option allows to duplicate a worksheet in a Inventory"
+                " Management spreadsheet."
             )
             print(
-                "To duplicate a worksheet, the user needs to pick a name of a worksheet to duplicate."
+                "To duplicate a worksheet, the user needs to pick a name of a"
+                " worksheet to duplicate."
             )
             print(
-                "If successful, a new worksheet with 6 columns, 200 rows and name Copy_of_worksheet_name will be created"
+                "If successful, a new worksheet with 6 columns, 200 rows and"
+                " name Copy_of_worksheet_name will be created"
             )
             print("User can rename it by using rename worksheet option")
             input("Press any key to leave the submenu:\n")
@@ -110,19 +120,23 @@ def help() -> None:
         elif user_choice_lower == "6":
             print("This option prints the worksheet content in a table form.")
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first."
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first."
             )
             print(
-                "Data sorting keys need to be chosen by using Add data sorting keys option, beforehand"
+                "Data sorting keys need to be chosen by using Add data sorting"
+                " keys option, beforehand"
             )
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "7":
             print(
-                "This option allows to clear a worksheet from all of its content"
+                "This option allows to clear a worksheet from all of its"
+                " content"
             )
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first."
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first."
             )
             print("The user will be asked for confirmation")
             input("Press any key to leave the submenu:\n")
@@ -132,24 +146,29 @@ def help() -> None:
                 "This option allows to add a data sorting keys in a worksheet"
             )
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first"
             )
             print(
-                "It will add/change the values in a first row of a worksheet to up maximum 6."
+                "It will add/change the values in a first row of a worksheet"
+                " to up maximum 6."
             )
             print("The data sorting keys must be unique")
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "9":
             print(
-                "This option allows to add a row of data to a worksheet in a fastest way"
+                "This option allows to add a row of data to a worksheet in a"
+                " fastest way"
             )
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first"
             )
             print("It will ask user for value for each data sorting key")
             print(
-                "If the user is satisfied with the data he entered, he can either confirm the operation or abort it."
+                "If the user is satisfied with the data he entered, he can"
+                " either confirm the operation or abort it."
             )
             print(
                 "The data will be added to the last empty row in a worksheet"
@@ -158,47 +177,58 @@ def help() -> None:
             continue
         elif user_choice_lower == "10":
             print(
-                "This option allows to modify a single cell value in a worksheet."
+                "This option allows to modify a single cell value in a"
+                " worksheet."
             )
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first"
             )
             print(
-                "Data sorting keys need to be chosen by using Add data sorting keys option, beforehand"
+                "Data sorting keys need to be chosen by using Add data sorting"
+                " keys option, beforehand"
             )
             print(
-                "To help the user, the program will ask the user for a range which he wants to see in the terminal."
+                "To help the user, the program will ask the user for a range"
+                " which he wants to see in the terminal."
             )
             print(
                 "Table with row and column markings will be presented to user"
             )
             print(
-                "Next, the program asks the user for a coordinates of cell he wants to modify, and the value"
+                "Next, the program asks the user for a coordinates of cell he"
+                " wants to modify, and the value"
             )
             print(
-                "If the user is satisfied with the data he entered, he can either confirm the operation or abort it."
+                "If the user is satisfied with the data he entered, he can"
+                " either confirm the operation or abort it."
             )
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "11":
             print("This option allows to modify a whole row in a worksheet")
             print(
-                "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
+                "The user needs to pick a worksheet they wish to operate on by"
+                " choosing Set Active Worksheet first"
             )
             print(
-                "Data sorting keys need to be chosen by using Add data sorting keys option, beforehand"
+                "Data sorting keys need to be chosen by using Add data sorting"
+                " keys option, beforehand"
             )
             print(
-                "To help the user, the program will ask the user for a range which he wants to see in the terminal."
+                "To help the user, the program will ask the user for a range"
+                " which he wants to see in the terminal."
             )
             print(
                 "Table with row and column markings will be presented to user."
             )
             print(
-                "Next, the program asks the user for value for each data sorting key."
+                "Next, the program asks the user for value for each data"
+                " sorting key."
             )
             print(
-                "If the user is satisfied with the data he entered, he can either confirm the operation or abort it."
+                "If the user is satisfied with the data he entered, he can"
+                " either confirm the operation or abort it."
             )
             input("Press any key to leave the submenu:\n")
             continue
@@ -214,7 +244,8 @@ def user_confirmation() -> bool:
     Function that will prompt the user for confirming the action
     """
     user_input = input(
-        "Are you sure ? Press y to confirm, or any other key to cancel the operation:\n"
+        "Are you sure ? Press y to confirm, or any other key to cancel the"
+        " operation:\n"
     )
     user_input_lower = user_input.lower()
     if user_input_lower == "y":
