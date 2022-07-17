@@ -44,7 +44,9 @@ def get_user_new_row() -> list:
             new_cell_value = input(
                 f"Enter value for cell {i} in row {last_row_of_data}:\n"
             )
-            new_cell_value = worksheet.replace_space_with_underscore(new_cell_value)
+            new_cell_value = worksheet.replace_space_with_underscore(
+                new_cell_value
+            )
             new_row.append(new_cell_value)
         return new_row
 
@@ -62,7 +64,9 @@ def append_rows(user_row_candidate: list, row_number: int) -> None:
     prompt_user = messages.user_confirmation()
     if prompt_user:
         print("Processing ...")
-        current_worksheet.append_row(user_row_candidate, table_range=f"A{row_number}")
+        current_worksheet.append_row(
+            user_row_candidate, table_range=f"A{row_number}"
+        )
         print("Data added successfully !")
     else:
         print("Operation cancelled")
@@ -74,8 +78,12 @@ def get_user_data_range() -> tuple:
     """
     while True:
         try:
-            start_number = int(input("Enter the starting number from 1 to 200:\n"))
-            end_number = int(input("Enter the end number from from 1 to 200:\n"))
+            start_number = int(
+                input("Enter the starting number from 1 to 200:\n")
+            )
+            end_number = int(
+                input("Enter the end number from from 1 to 200:\n")
+            )
         except ValueError:
             print("Not a number")
             continue
@@ -134,7 +142,9 @@ def indexed_table() -> None:
         columns=pd.Index(column_counter),
     )
     if data_indexed.empty:
-        print(f"Your table is empty in range {start_data_index+1} to {end_data_index}")
+        print(
+            f"Your table is empty in range {start_data_index+1} to {end_data_index}"
+        )
     else:
         print(data_indexed)
 
@@ -149,7 +159,9 @@ def get_user_cell_to_update() -> tuple:
     while True:
         try:
             row_number = int(input("Enter the row number from 2 to 200:\n"))
-            column_number = int(input("Enter the column number from from 1 to 6:\n"))
+            column_number = int(
+                input("Enter the column number from from 1 to 6:\n")
+            )
         except ValueError:
             print("Not a number")
             continue
@@ -171,7 +183,7 @@ def update_cell() -> None:
     if not validation.check_active_worksheet():
         return
     current_keys = keys.get_current_keys()
-    if len(current_keys) == 0:
+    if current_keys == 0:
         print("You have to set your data sorting keys first")
         return
     row_number, column_number = get_user_cell_to_update()
@@ -184,7 +196,9 @@ def update_cell() -> None:
     user_confirmation = messages.user_confirmation()
     if user_confirmation:
         worksheet_to_update = config.SHEET.worksheet(config.current_worksheet)
-        worksheet_to_update.update_cell(row_number, column_number, cell_candidate)
+        worksheet_to_update.update_cell(
+            row_number, column_number, cell_candidate
+        )
         print("Cell was successfully updated!")
     else:
         print("Operation aborted")
@@ -216,8 +230,8 @@ def get_user_value_for_each_cell() -> list:
     new_row_value = []
     keys_number = keys.get_current_keys()
     updated_keys_len = len(keys.remove_empty_string_from_keys(keys_number))
-    for cell in range(1, updated_keys_len + 1):
-        cell_value = input(f"Enter value for cell value {cell}:\n")
+    for cell_idx in range(1, updated_keys_len + 1):
+        cell_value = input(f"Enter value for cell value {cell_idx}:\n")
         cell_value = worksheet.replace_space_with_underscore(cell_value)
         new_row_value.append(cell_value)
     return new_row_value
@@ -230,7 +244,7 @@ def update_row() -> None:
     if not validation.check_active_worksheet():
         return
     current_keys = keys.get_current_keys()
-    if len(current_keys) == 0:
+    if current_keys == 0:
         print("You have to set your data sorting keys first")
         return
     print(len(current_keys))
@@ -238,13 +252,18 @@ def update_row() -> None:
     user_values = get_user_value_for_each_cell()
     user_values_formatted = ", ".join(user_values)
     print("Processing ...")
-    print(f"Row {row_number} will be updated with {user_values_formatted} values")
+    print(
+        f"Row {row_number} will be updated with {user_values_formatted} values"
+    )
     user_confirmation = messages.user_confirmation()
     if user_confirmation:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
         current_worksheet.batch_update(
             [
-                {"range": f"A{row_number}:F{row_number}", "values": [user_values]},
+                {
+                    "range": f"A{row_number}:F{row_number}",
+                    "values": [user_values],
+                },
             ]
         )
         print("Row was successfully updated !")

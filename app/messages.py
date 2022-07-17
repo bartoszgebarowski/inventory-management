@@ -48,7 +48,9 @@ def help() -> None:
         user_input = input("Make your selection:\n")
         user_choice_lower = user_input.lower()
         if user_choice_lower == "1":
-            print("This option allows setting a worksheet that user wants to work with")
+            print(
+                "This option allows setting a worksheet that user wants to work with"
+            )
             print(
                 "If this option is not chosen, adding, modifying or presenting data in options"
             )
@@ -67,7 +69,9 @@ def help() -> None:
             )
             print("For a worksheet to be created, its name must be unique.")
             print("Spaces will be replaced with underscore for clarity.")
-            print("New worksheet will have 6 columns and 200 rows for user disposal.")
+            print(
+                "New worksheet will have 6 columns and 200 rows for user disposal."
+            )
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "3":
@@ -84,7 +88,9 @@ def help() -> None:
             print(
                 "This option allows to delete a worksheet in a Inventory Management spreadsheet."
             )
-            print("To delete a worksheet, the user must pick the worksheet's name.")
+            print(
+                "To delete a worksheet, the user must pick the worksheet's name."
+            )
             print("Template worksheet cannot be chosen in this step.")
             input("Press any key to leave the submenu:\n")
             continue
@@ -112,7 +118,9 @@ def help() -> None:
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "7":
-            print("This option allows to clear a worksheet from all of its content")
+            print(
+                "This option allows to clear a worksheet from all of its content"
+            )
             print(
                 "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first."
             )
@@ -120,7 +128,9 @@ def help() -> None:
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "8":
-            print("This option allows to add a data sorting keys in a worksheet")
+            print(
+                "This option allows to add a data sorting keys in a worksheet"
+            )
             print(
                 "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
             )
@@ -141,11 +151,15 @@ def help() -> None:
             print(
                 "If the user is satisfied with the data he entered, he can either confirm the operation or abort it."
             )
-            print("The data will be added to the last empty row in a worksheet")
+            print(
+                "The data will be added to the last empty row in a worksheet"
+            )
             input("Press any key to leave the submenu:\n")
             continue
         elif user_choice_lower == "10":
-            print("This option allows to modify a single cell value in a worksheet.")
+            print(
+                "This option allows to modify a single cell value in a worksheet."
+            )
             print(
                 "The user needs to pick a worksheet they wish to operate on by choosing Set Active Worksheet first"
             )
@@ -155,7 +169,9 @@ def help() -> None:
             print(
                 "To help the user, the program will ask the user for a range which he wants to see in the terminal."
             )
-            print("Table with row and column markings will be presented to user")
+            print(
+                "Table with row and column markings will be presented to user"
+            )
             print(
                 "Next, the program asks the user for a coordinates of cell he wants to modify, and the value"
             )
@@ -175,7 +191,9 @@ def help() -> None:
             print(
                 "To help the user, the program will ask the user for a range which he wants to see in the terminal."
             )
-            print("Table with row and column markings will be presented to user.")
+            print(
+                "Table with row and column markings will be presented to user."
+            )
             print(
                 "Next, the program asks the user for value for each data sorting key."
             )

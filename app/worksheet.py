@@ -1,4 +1,4 @@
-from app import validation, keys, messages, rows
+from app import validation,messages
 from app import app_config as config
 from app.errors import WorksheetNotFoundError
 from tabulate import tabulate
@@ -11,19 +11,19 @@ def get_all_worksheets_titles() -> list:
     """
     worksheet_list = config.SHEET.worksheets()
     worksheets_all = []
-    for index in range(len(worksheet_list)):
-        worksheets_all.append(worksheet_list[index].title)
+    for worksheet in worksheet_list:
+        worksheets_all.append(worksheet.title)
     return worksheets_all
 
 
 def get_all_worksheets_titles_with_id() -> dict:
     """
-    Function that returns the list of all worksheets titles
+    Function that returns the dictionary of all worksheets titles with id
     """
     worksheets = config.SHEET.worksheets()
     worksheets_titles_with_id = {}
     for worksheet in worksheets:
-        worksheets_titles_with_id[worksheet.title] = [worksheet.id]
+        worksheets_titles_with_id[worksheet.title] = worksheet.id
     return worksheets_titles_with_id
 
 
@@ -42,7 +42,7 @@ def get_all_worksheets_indexed_titles() -> dict:
     worksheets = config.SHEET.worksheets()
     indexed_titles = {}
     for worksheet in worksheets:
-        indexed_titles[worksheet.title] = [worksheet.index]
+        indexed_titles[worksheet.title] = worksheet.index
     return indexed_titles
 
 
@@ -62,7 +62,7 @@ def get_sheet_index(validated_input: str) -> int:
     Function that should take the output of validate_user_chosen_sheet function
     and return the index of correct worksheet
     """
-    index = get_all_worksheets_indexed_titles()[validated_input][0]
+    index = get_all_worksheets_indexed_titles()[validated_input]
     return index
 
 
@@ -71,7 +71,7 @@ def add_worksheet() -> None:
     Function that adds a worksheet to a spreadsheet
     """
     user_input = input("Enter the name of the new worksheet:\n")
-    if validation.check_if_worksheet_exist(user_input) == False:
+    if validation.check_if_worksheet_exist(user_input) is False:
         print("Processing...")
         worksheet_title = replace_space_with_underscore(user_input)
         config.SHEET.add_worksheet(title=worksheet_title, rows=200, cols=6)
@@ -97,22 +97,15 @@ def delete_worksheet() -> None:
         return
     if not messages.user_confirmation():
         print("Operation cancelled")
-    elif (
-        len(get_all_worksheets_titles()) > 1
-        and not worksheet_name == get_all_worksheets_titles()[0]
-    ):
+    elif len(worksheets_to_check) <= 1:
+        print("You can't delete all the sheets in a spreadsheet.")
+    elif worksheet_name == worksheets_to_check[0]:
+        print("You can't delete template worksheet")
+    else:
         print("Processing ...")
         sheet_to_remove = config.SHEET.worksheet(worksheet_name)
         config.SHEET.del_worksheet(sheet_to_remove)
         print("Sheet successfully removed !")
-    elif worksheet_name == get_all_worksheets_titles()[0]:
-        print("You can't delete template worksheet")
-
-    elif len(worksheets_to_check) == 1:
-        print("You can't delete all the sheets in a spreadsheet.")
-
-    else:
-        print("Could not remove worksheet")
 
 
 def set_active_worksheet() -> None | str:
@@ -148,7 +141,7 @@ def duplicate_sheet() -> None:
             user_input, worksheets_to_check
         )
         print("Processing ...")
-        sheet_id = get_all_worksheets_titles_with_id()[worksheet_name][0]
+        sheet_id = get_all_worksheets_titles_with_id()[worksheet_name]
         sheet_index = sheet_new_index(worksheet_name)
         config.SHEET.duplicate_sheet(
             source_sheet_id=sheet_id,
@@ -158,7 +151,6 @@ def duplicate_sheet() -> None:
         print("Worksheet successfully duplicated !")
     except WorksheetNotFoundError:
         print("Worksheet not found")
-        return
 
 
 def rename_sheet() -> None:
@@ -168,7 +160,9 @@ def rename_sheet() -> None:
     user_input = input("Enter the worksheet name to rename:\n")
     user_input_new_name = input("Enter new worksheet name:\n")
     try:
-        worksheet_exist = validation.check_if_worksheet_exist(user_input_new_name)
+        worksheet_exist = validation.check_if_worksheet_exist(
+            user_input_new_name
+        )
         worksheets_to_check = get_all_worksheets_titles()
         validated_input = validation.validate_user_chosen_sheet(
             user_input, worksheets_to_check
@@ -188,7 +182,6 @@ def rename_sheet() -> None:
         print("Worksheet successfully renamed !")
     elif len(user_input_new_name) <= 0:
         print("A worksheet name must be at least 1 character long !")
-        return
     elif (
         not worksheet_exist
         and len(user_input_new_name) > 0
@@ -210,11 +203,14 @@ def print_worksheet_content() -> None:
         return
     else:
         worksheet_data = worksheet.get_all_values()
-        if len(worksheet_data) == 0:
+        if worksheet_data == 0:
             print("Can't print empty worksheet")
         else:
             data_to_print = tabulate(
-                worksheet_data, headers="firstrow", numalign="center", stralign="center"
+                worksheet_data,
+                headers="firstrow",
+                numalign="center",
+                stralign="center",
             )
             print(data_to_print)
 
