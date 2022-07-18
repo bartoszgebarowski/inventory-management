@@ -1,6 +1,7 @@
-from app import validation, worksheet
-from app import app_config as config
 import gspread
+
+from app import app_config as config
+from app import validation, worksheet
 
 
 def get_current_keys() -> list:
@@ -85,7 +86,9 @@ def get_new_keys(keys_number) -> list:
             key_name = input(f"Enter key number {i}:\n")
             key_name = worksheet.replace_space_with_underscore(key_name)
             new_keys.append(key_name)
-
+        for index in range(len(new_keys)):
+            if new_keys[index] == "":
+                new_keys[index] = f"Empty_key{index+1}"
         if not validation.check_keys_for_duplicates(new_keys):
             new_keys = []
             print("Keys must be unique")
