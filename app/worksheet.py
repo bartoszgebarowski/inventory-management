@@ -205,8 +205,9 @@ def print_worksheet_content() -> None:
         return
     else:
         worksheet_data = worksheet.get_all_values()
-        if worksheet_data == 0:
+        if len(worksheet_data) == 0:
             print("Can't print empty worksheet")
+            print('Set your data sorting keys first!')
         else:
             data_to_print = tabulate(
                 worksheet_data,
