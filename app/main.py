@@ -2,7 +2,8 @@ from app import worksheet, messages, keys, rows
 
 
 def run_app():
-    """_summary_
+    """
+    Main loop
     """
     while True:
         messages.print_menu()
@@ -37,7 +38,9 @@ def run_app():
         elif user_choice_lower == "8":
             keys.add_data_sorting_keys()
         elif user_choice_lower == "9":
-            rows.append_rows(rows.get_user_new_row(), rows.get_last_row_number())
+            rows.append_rows(
+                rows.get_user_new_row(), rows.get_last_row_number()
+                )
             messages.wait_in_seconds(2)
         elif user_choice_lower == "10":
             rows.indexed_table()
