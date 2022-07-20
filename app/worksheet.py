@@ -72,7 +72,12 @@ def add_worksheet() -> None:
     Function that adds a worksheet to a spreadsheet
     """
     user_input = input("Enter the name of the new worksheet:\n")
-    if validation.check_if_worksheet_exist(user_input) is False:
+    if (
+        validation.check_if_worksheet_exist(user_input) is False and
+        len(user_input) <= 0
+    ):
+        print("A worksheet name must be at least 1 character long !")
+    elif validation.check_if_worksheet_exist(user_input) is False:
         print("Processing...")
         worksheet_title = replace_space_with_underscore(user_input)
         config.SHEET.add_worksheet(title=worksheet_title, rows=200, cols=6)
@@ -81,7 +86,7 @@ def add_worksheet() -> None:
             " to the spreadsheet!"
         )
     else:
-        print("You cant add the sheet with the same name")
+        print("You can't add the sheet with the same name")
 
 
 def delete_worksheet() -> None:
@@ -102,7 +107,7 @@ def delete_worksheet() -> None:
     elif len(worksheets_to_check) <= 1:
         print("You can't delete all the sheets in a spreadsheet.")
     elif worksheet_name == worksheets_to_check[0]:
-        print("You can't delete template worksheet")
+        print("You can't delete the template worksheet")
     else:
         print("Processing ...")
         sheet_to_remove = config.SHEET.worksheet(worksheet_name)
@@ -124,7 +129,7 @@ def set_active_worksheet() -> None | str:
         print("Worksheet not found")
         return
     if validated_input == get_all_worksheets_titles()[0]:
-        print("You cant work on the the template worksheet")
+        print("You can't work on the template worksheet")
 
     else:
         config.current_worksheet = validated_input
@@ -173,9 +178,9 @@ def rename_sheet() -> None:
         print("Worksheet not found")
         return
     if (
-        not worksheet_exist
-        and len(user_input_new_name) > 0
-        and not validated_input == worksheets_to_check[0]
+        not worksheet_exist and
+        len(user_input_new_name) > 0 and not
+        validated_input == worksheets_to_check[0]
     ):
         print("Processing ...")
         index = get_sheet_index(validated_input)
@@ -185,9 +190,9 @@ def rename_sheet() -> None:
     elif len(user_input_new_name) <= 0:
         print("A worksheet name must be at least 1 character long !")
     elif (
-        not worksheet_exist
-        and len(user_input_new_name) > 0
-        and validated_input == get_all_worksheets_titles()[0]
+        not worksheet_exist and
+        len(user_input_new_name) > 0 and
+        validated_input == get_all_worksheets_titles()[0]
     ):
         print("You can't rename the template worksheet")
     else:
@@ -207,7 +212,7 @@ def print_worksheet_content() -> None:
         worksheet_data = worksheet.get_all_values()
         if len(worksheet_data) == 0:
             print("Can't print empty worksheet")
-            print('Set your data sorting keys first!')
+            print("Set your data sorting keys first!")
         else:
             data_to_print = tabulate(
                 worksheet_data,

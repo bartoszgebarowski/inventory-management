@@ -32,8 +32,8 @@ def print_keys() -> None:
     if not validation.check_active_worksheet():
         print("No active worksheet was selected.")
     elif (
-        validation.check_active_worksheet()
-        and not validation.check_keys_for_duplicates(get_current_keys())
+        validation.check_active_worksheet()and not
+        validation.check_keys_for_duplicates(get_current_keys())
     ):
         print("You have to set your data sorting keys first !")
     else:
@@ -65,7 +65,7 @@ def get_number_of_new_keys_to_update() -> int:
                 input("Enter how many keys do you want to update:\n")
             )
             if keys_number > 6:
-                print("You cant add more than 6 keys")
+                print("You can't add more than 6 keys")
             elif keys_number == 0:
                 print("Nothing will be altered !")
             elif keys_number < 0:
@@ -76,7 +76,7 @@ def get_number_of_new_keys_to_update() -> int:
             print("Your input must be integer.")
 
 
-def get_new_keys(keys_number) -> list:
+def get_new_keys(keys_number: int) -> list:
     """
     Function that returns list of inputs
     """
@@ -98,7 +98,7 @@ def get_new_keys(keys_number) -> list:
 
 def add_data_sorting_keys() -> None:
     """
-    Function that add new single key
+    Function that modify data sorting keys
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
@@ -109,8 +109,6 @@ def add_data_sorting_keys() -> None:
         keys_candidate = get_new_keys(number_of_keys)
         if len(keys_candidate) == 0:
             print("Operation failed !")
-        elif range == 0:
-            "No keys"
         while len(keys_candidate) < 6:
             keys_candidate.append("")
         else:

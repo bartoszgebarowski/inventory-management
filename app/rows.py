@@ -59,9 +59,12 @@ def append_rows(user_row_candidate: list, row_number: int) -> None:
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
+        last_row_of_data = get_last_row_number()
     except gspread.exceptions.WorksheetNotFound:
         return
     if len(keys.get_current_keys()) == 0:
+        return
+    elif last_row_of_data > 200:
         return
     prompt_user = messages.user_confirmation()
     if prompt_user:
@@ -90,10 +93,10 @@ def get_user_data_range() -> tuple:
             print("Not a number")
             continue
         if (
-            start_number <= 0
-            or end_number <= 0
-            or start_number > 200
-            or end_number > 200
+            start_number <= 0 or
+            end_number <= 0 or
+            start_number > 200 or
+            end_number > 200
         ):
             print("Invalid range")
             continue
@@ -171,10 +174,10 @@ def get_user_cell_to_update() -> tuple:
             print("Not a number")
             continue
         if (
-            row_number < 2
-            or column_number <= 0
-            or row_number > 200
-            or column_number > 6
+            row_number < 2 or
+            column_number <= 0 or
+            row_number > 200 or
+            column_number > 6
         ):
             print("Invalid range. Please try again.")
             continue
@@ -188,7 +191,7 @@ def update_cell() -> None:
     if not validation.check_active_worksheet():
         return
     current_keys = keys.get_current_keys()
-    if current_keys == 0:
+    if len(current_keys) == 0:
         print("You have to set your data sorting keys first")
         return
     row_number, column_number = get_user_cell_to_update()
@@ -251,7 +254,7 @@ def update_row() -> None:
     if not validation.check_active_worksheet():
         return
     current_keys = keys.get_current_keys()
-    if current_keys == 0:
+    if len(current_keys) == 0:
         print("You have to set your data sorting keys first")
         return
     print(len(current_keys))
