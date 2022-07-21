@@ -32,7 +32,6 @@ The "Inventory Management" project was created to help small companies keep trac
     * [PEP8 Validation](#pep8-validation)
 1. [Deployment](#deployment)
     * [Version control](#version-control)
-    * [Deployment to GitHub pages](#deployment-to-github-pages)
     * [Clone the repository locally](#clone-the-repository-locally)
     * [Virtual Environment](#virtual-environment)
     * [Google Drive API and Google Sheets API Setup](#google-drive-api-and-google-sheets-api-setup)
@@ -54,35 +53,47 @@ As a User, I want to:
 ## Features
 
 * Main menu
+![Main manu - terminal](docs/readme_images/main-menu-terminal.png)
     * guides a user through available options
 * Set active worksheet
+![Set active worksheet - terminal](docs/readme_images/set_worksheet_terminal.png)
     * allows a user to choose a worksheet that he wants to work with in the given moment
 * Add worksheet
+![Add worksheet - terminal](docs/readme_images/add-worksheet_terminal.png)
     * allows a user to add their own worksheets
     * 6 columns and 200 rows are given to user disposal per worksheet
 * Rename worksheet
+![Rename worksheet - terminal](docs/readme_images/rename-worksheet-terminal.png)
     * allows a user to rename each worksheet, besides the template one
 * Duplicate worksheet
+![Duplicate worksheet - terminal](docs/readme_images/duplicate-worksheet-terminal.png)
     * allows a user to make a copy of chosen worksheet 
 * Clear worksheet
+![Clear worksheet - terminal](docs/readme_images/clear-worksheet-terminal.png)
     * allows a user to remove all content from a worksheet by using single option from the main menu 
 * Print worksheet content
+![Print worksheet content - terminal](docs/readme_images/print-worksheet-content-terminal.png)
     * Table-like representation of data in worksheet
 * Add data sorting keys
+![Add data sorting keys - terminal](docs/readme_images/add_data_keys_terminal.png)
     * allows a user to set first row in a worksheet 
     * users can change them as they see fit
 * Add a row of data
+![Add row of data - terminal](docs/readme_images/add-row-data-terminal.png)
     * simple and fastest way to add row of data to a worksheet
     * entries to a row are dictated by number of data sorting keys
     * next free row in a worksheet will be used to add user inputs to a worksheet
 * Modify single cell
+![Modify single cell - terminal](docs/readme_images/single-cell-terminal.png)
     * more complicated way to edit records in a worksheet
     * to help user, worksheet-like environment was implemented
 * Modify single row
+![Modify single row - terminal](docs/readme_images/single-row-terminal.png)
     * allows to change whole row in a worksheet
     * to help user, worksheet-like environment was implemented
     * entries to a row are dictated by number of data sorting keys
 * Help menu
+![Help menu - terminal](docs/readme_images/help-menu-terminal.png)
     * explains basic concepts of each feature to users
 
 ### Future Development & Features Left to Implement
@@ -206,18 +217,6 @@ The following commands were used:
 ```git commit -m "commit message"``` - This command was used to commit all staged changes to a local repository
 
 ```git push``` - This command was used to upload all committed locally changes to a GitHub repository
-
-### Deployment to GitHub pages
-
-The site was deployed to GitHub by taking the following steps:
-
-* Navigating to the Settings tab
-* Navigating to the Pages tab in the menu on the left
-* Selecting Branch from which the site is to be built
-* Clicking Save
-* Receiving confirmation stating that "Your site is published at https://bartoszgebarowski.github.io/repository-name/"
-
-(Side note: It took several minutes before the site went live)
 
 ### Clone the Repository locally 
 
