@@ -72,17 +72,16 @@ def get_new_keys(keys_number: int) -> list:
     Function that returns list of inputs
     It replaces the empty inputs in a format "Empty_key_num"
     """
-    new_keys = []
     while True:
+        new_keys = []
         for i in range(1, keys_number + 1):
             key_name = input(f"Enter key number {i}:\n")
             key_name = worksheet.replace_space_with_underscore(key_name)
             new_keys.append(key_name)
-        for index in range(len(new_keys)):
-            if new_keys[index] == "":
+        for index, key in enumerate(new_keys):
+            if key == "":
                 new_keys[index] = f"Empty_key{index+1}"
         if not validation.check_for_duplicates(new_keys):
-            new_keys = []
             print("Keys must be unique")
             continue
         return new_keys
