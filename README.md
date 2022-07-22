@@ -37,6 +37,7 @@ The "Inventory Management" project was created to help small companies keep trac
     * [Google Drive API and Google Sheets API Setup](#google-drive-api-and-google-sheets-api-setup)
     * [Heroku deployment](#heroku-deployment)
 1. [Credits](#credits)
+    * [Honourable mentions](#honourable-mentions)
 
 
 
@@ -53,7 +54,7 @@ As a User, I want to:
 ## Features
 
 * Main menu
-![Main manu - terminal](docs/readme_images/main-menu-terminal.png)
+![Main menu - terminal](docs/readme_images/main-menu-terminal.png)
     * guides a user through available options
 * Set active worksheet
 ![Set active worksheet - terminal](docs/readme_images/set_worksheet_terminal.png)
@@ -67,10 +68,10 @@ As a User, I want to:
     * allows a user to rename each worksheet, besides the template one
 * Duplicate worksheet
 ![Duplicate worksheet - terminal](docs/readme_images/duplicate-worksheet-terminal.png)
-    * allows a user to make a copy of chosen worksheet 
+    * allows a user to make a copy of the chosen worksheet 
 * Clear worksheet
 ![Clear worksheet - terminal](docs/readme_images/clear-worksheet-terminal.png)
-    * allows a user to remove all content from a worksheet by using single option from the main menu 
+    * allows a user to remove all content from a worksheet by using a single option from the main menu 
 * Print worksheet content
 ![Print worksheet content - terminal](docs/readme_images/print-worksheet-content-terminal.png)
     * Table-like representation of data in worksheet
@@ -80,8 +81,8 @@ As a User, I want to:
     * users can change them as they see fit
 * Add a row of data
 ![Add row of data - terminal](docs/readme_images/add-row-data-terminal.png)
-    * simple and fastest way to add row of data to a worksheet
-    * entries to a row are dictated by number of data sorting keys
+    * simple and fastest way to add a row of data to a worksheet
+    * entries to a row are dictated by a number of data sorting keys
     * next free row in a worksheet will be used to add user inputs to a worksheet
 * Modify single cell
 ![Modify single cell - terminal](docs/readme_images/single-cell-terminal.png)
@@ -89,7 +90,7 @@ As a User, I want to:
     * to help user, worksheet-like environment was implemented
 * Modify single row
 ![Modify single row - terminal](docs/readme_images/single-row-terminal.png)
-    * allows to change whole row in a worksheet
+    * allows changing the whole row in a worksheet
     * to help user, worksheet-like environment was implemented
     * entries to a row are dictated by number of data sorting keys
 * Help menu
@@ -275,7 +276,7 @@ The following commands were used:
 
 ## Credits
 
-Honourable mentions:
+### Honourable mentions:
 Code Institute - python essentials template, used in this project
 Daisy McGirr - mentor of the Code Institute, whose guidance was invaluable 
 Tobiasz Chodarewicz - a friend whose explanation of various code-related issues allowed me to tackle problems that I have encountered during the development process
