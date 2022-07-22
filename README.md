@@ -4,7 +4,7 @@
 
 The "Inventory Management" project was created to help small companies keep track of their assets or for individuals who want to keep the information structured and organised. The application was built on Google Sheets API and Google Drive API to accommodate userbase actions, like adding, removing or modifying data. 
 
-Link to a spreadsheet: https://docs.google.com/spreadsheets/d/1JtYPAQ4h_VdnEUvtZwWqNpw_EsI991cCLYQN40e5PqU/edit?usp=sharing
+[Link to a spreadsheet](https://docs.google.com/spreadsheets/d/1JtYPAQ4h_VdnEUvtZwWqNpw_EsI991cCLYQN40e5PqU/edit?usp=sharing)
 
 ![Terminal gif - representation of program](docs/readme_images/terminal-gif.gif)
 
@@ -40,6 +40,7 @@ Link to a spreadsheet: https://docs.google.com/spreadsheets/d/1JtYPAQ4h_VdnEUvtZ
     * [Heroku deployment](#heroku-deployment)
 1. [Credits](#credits)
     * [Honourable mentions](#honourable-mentions)
+    * [Note about template worksheet](#note-about-template-worksheet)
 
 
 
@@ -89,12 +90,12 @@ As a User, I want to:
 * Modify single cell
 ![Modify single cell - terminal](docs/readme_images/single-cell-terminal.png)
     * more complicated way to edit records in a worksheet
-    * to help user, worksheet-like environment was implemented
+    * to help users, worksheet-like environment was implemented
 * Modify single row
 ![Modify single row - terminal](docs/readme_images/single-row-terminal.png)
     * allows changing the whole row in a worksheet
-    * to help user, worksheet-like environment was implemented
-    * entries to a row are dictated by number of data sorting keys
+    * to help users, worksheet-like environment was implemented
+    * entries to a row are dictated by a number of data sorting keys
 * Help menu
 ![Help menu - terminal](docs/readme_images/help-menu-terminal.png)
     * explains basic concepts of each feature to users
@@ -143,7 +144,7 @@ As a User, I want to:
 
 ### Logic chart of Adding row of data
 
-![Logic chart of Adding row of data](docs/readme_images/add-row-data.png)
+![Logic chart of Adding a row of data](docs/readme_images/add-row-data.png)
 
 ### Logic chart of modifying a single cell
 
@@ -178,7 +179,7 @@ Pandas
 
 Google Sheets API and Google Drive API
 
-* connect the application and managing data in worksheets
+* connect the application and manage data in worksheets
 
 Lucid Charts
 
@@ -275,17 +276,21 @@ The following commands were used:
 1. Key: CREDS, value: the content of file_with_credentials.json that will allow an application to access Google Sheets API
 1. Navigate to the Buildpacks section and add Python and NodeJS(in that order)
 1. Navigate to the Deploy tab and connect the Heroku to Github
-1. Choose your Github repository and branch from which application will be build
+1. Choose your Github repository and branch from which the application will be build
 1. Choose a method of deployment(Automatic or Manual) and click Deploy branch button
 
 [Back to Table of contents](#table-of-contents)
 
 ## Credits
 
-### Honourable mentions:
+### Honourable mentions
 Code Institute - python essentials template, used in this project
 Daisy McGirr - mentor of the Code Institute, whose guidance was invaluable 
 Tobiasz Chodarewicz - a friend whose explanation of various code-related issues allowed me to tackle problems that I have encountered during the development process
 You - for visiting my Repository and reading the documentation
+
+### Note about template worksheet
+
+The template worksheet has been made public with the viewer permissions. In a real-world application, this would not be public.
 
 [Back to Table of contents](#table-of-contents)
