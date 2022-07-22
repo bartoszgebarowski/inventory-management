@@ -4,6 +4,8 @@
 
 The "Inventory Management" project was created to help small companies keep track of their assets or for individuals who want to keep the information structured and organised. The application was built on Google Sheets API and Google Drive API to accommodate userbase actions, like adding, removing or modifying data. 
 
+Link to a spreadsheet: https://docs.google.com/spreadsheets/d/1JtYPAQ4h_VdnEUvtZwWqNpw_EsI991cCLYQN40e5PqU/edit?usp=sharing
+
 ![Terminal gif - representation of program](docs/readme_images/terminal-gif.gif)
 
 ## Table of contents
@@ -57,10 +59,10 @@ As a User, I want to:
 ![Main menu - terminal](docs/readme_images/main-menu-terminal.png)
     * guides a user through available options
 * Set active worksheet
-![Set active worksheet - terminal](docs/readme_images/set_worksheet_terminal.png)
+![Set active worksheet - terminal](docs/readme_images/set-worksheet-terminal.png)
     * allows a user to choose a worksheet that he wants to work with in the given moment
 * Add worksheet
-![Add worksheet - terminal](docs/readme_images/add-worksheet_terminal.png)
+![Add worksheet - terminal](docs/readme_images/add-worksheet-terminal.png)
     * allows a user to add their own worksheets
     * 6 columns and 200 rows are given to user disposal per worksheet
 * Rename worksheet
@@ -76,7 +78,7 @@ As a User, I want to:
 ![Print worksheet content - terminal](docs/readme_images/print-worksheet-content-terminal.png)
     * Table-like representation of data in worksheet
 * Add data sorting keys
-![Add data sorting keys - terminal](docs/readme_images/add_data_keys_terminal.png)
+![Add data sorting keys - terminal](docs/readme_images/add-data-keys-terminal.png)
     * allows a user to set first row in a worksheet 
     * users can change them as they see fit
 * Add a row of data
@@ -96,6 +98,10 @@ As a User, I want to:
 * Help menu
 ![Help menu - terminal](docs/readme_images/help-menu-terminal.png)
     * explains basic concepts of each feature to users
+* Template worksheet
+![Template worksheet - screenshot](docs/readme_images/template-worksheet-google-sheets.png) 
+    * the template worksheet was provided to give a user an easy way to start working with the application by using a copy of a template
+    * a user is only allowed to copy the template worksheet
 
 ### Future Development & Features Left to Implement
 * Fully fledged account system
@@ -141,11 +147,11 @@ As a User, I want to:
 
 ### Logic chart of modifying a single cell
 
-![Logic chart of modifying a single cell](docs/readme_images/single_cell.png)
+![Logic chart of modifying a single cell](docs/readme_images/single-cell.png)
 
 ### Logic chart of modifying a single row
 
-![Logic chart of modifying a single row](docs/readme_images/single_row.png)
+![Logic chart of modifying a single row](docs/readme_images/single-row.png)
 
 ### Help menu logic chart
 
