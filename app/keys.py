@@ -6,7 +6,7 @@ from app import validation, worksheet
 
 def get_current_keys() -> list:
     """
-    Function that returns data sorting keys
+    Function that returns current data sorting keys
     """
     keys = []
 
@@ -25,21 +25,12 @@ def get_current_keys() -> list:
         return keys
 
 
-def print_keys() -> None:
+def print_keys(current_keys: list) -> None:
     """
-    Function that will print out the data sorting keys
+    Function that will print out the sorting keys
     """
-    if not validation.check_active_worksheet():
-        print("No active worksheet was selected.")
-    elif (
-        validation.check_active_worksheet()and not
-        validation.check_keys_for_duplicates(get_current_keys())
-    ):
-        print("You have to set your data sorting keys first !")
-    else:
-        keys = get_current_keys()
-        keys_to_print = " ".join(keys)
-        print(f"Data sorting keys: {keys_to_print}")
+    keys_to_string = " ".join(current_keys)
+    print(f"Data sorting keys: {keys_to_string}")
 
 
 def get_user_new_keys() -> list:
@@ -79,6 +70,7 @@ def get_number_of_new_keys_to_update() -> int:
 def get_new_keys(keys_number: int) -> list:
     """
     Function that returns list of inputs
+    It replaces the empty inputs in a format "Empty_key_num"
     """
     new_keys = []
     while True:
@@ -89,7 +81,7 @@ def get_new_keys(keys_number: int) -> list:
         for index in range(len(new_keys)):
             if new_keys[index] == "":
                 new_keys[index] = f"Empty_key{index+1}"
-        if not validation.check_keys_for_duplicates(new_keys):
+        if not validation.check_for_duplicates(new_keys):
             new_keys = []
             print("Keys must be unique")
             continue
@@ -98,7 +90,7 @@ def get_new_keys(keys_number: int) -> list:
 
 def add_data_sorting_keys() -> None:
     """
-    Function that modify data sorting keys
+    Function that add/update sorting keys
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
@@ -123,7 +115,7 @@ def add_data_sorting_keys() -> None:
 
 def remove_empty_string_from_keys(keys: list) -> list:
     """
-    Function that will remove the empty strings from the list
+    Function that will remove the empty key strings from the list
     """
     keys = [key for key in keys if key != ""]
     return keys

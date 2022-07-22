@@ -117,7 +117,7 @@ def delete_worksheet() -> None:
 
 def set_active_worksheet() -> None | str:
     """
-    Function that will change the active worksheet
+    Function that will set an active worksheet
     """
     try:
         user_input = input("Enter the worksheet name that you will work on:\n")
@@ -162,7 +162,9 @@ def duplicate_sheet() -> None:
 
 def rename_sheet() -> None:
     """
-    Function that renames the chosen worksheet by the user.
+    Function that renames the chosen worksheet by the user
+    Renaming worksheet is only possible if a worksheet to rename exists
+    and new worksheet name is unique across all worksheets in a spreadsheet
     """
     user_input = input("Enter the worksheet name to rename:\n")
     user_input_new_name = input("Enter new worksheet name:\n")

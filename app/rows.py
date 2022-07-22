@@ -7,7 +7,8 @@ from app import keys, messages, validation, worksheet
 
 def get_last_row_number() -> int:
     """
-    Function that returns last row
+    Function that returns last empty row number from a worksheet
+    where user input potentially should be added
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
@@ -20,7 +21,9 @@ def get_last_row_number() -> int:
 
 def get_user_new_row() -> list:
     """
-    Function that returns a list of keys, in range of existing keys
+    Function that returns a list of keys chosen by the user
+    New row can not be added if no active worksheet is set, sorting keys are
+    absent or a user tries to add new entry to row in a worksheet above 200
     """
     new_row = []
     try:
@@ -41,6 +44,7 @@ def get_user_new_row() -> list:
         )
         return new_row
     else:
+        keys.print_keys(current_keys)
         print(f"You will add the data to row: {last_row_of_data}")
         for i in range(1, updated_keys_len + 1):
             new_cell_value = input(
@@ -53,9 +57,11 @@ def get_user_new_row() -> list:
         return new_row
 
 
-def append_rows(user_row_candidate: list, row_number: int) -> None:
+def append_row(user_row_candidate: list, row_number: int) -> None:
     """
-    Function that append data to the next row in the worksheet
+    Function that add user inputs to the next row in the worksheet
+    It validates if sorting keys are present, and if a user tries to
+    add inputs in a correct range
     """
     try:
         current_worksheet = config.SHEET.worksheet(config.current_worksheet)
@@ -72,7 +78,7 @@ def append_rows(user_row_candidate: list, row_number: int) -> None:
         current_worksheet.append_row(
             user_row_candidate, table_range=f"A{row_number}"
         )
-        print("Data added successfully !")
+        print("Your input/inputs was/were added successfully !")
     else:
         print("Operation cancelled")
 
@@ -80,6 +86,7 @@ def append_rows(user_row_candidate: list, row_number: int) -> None:
 def get_user_data_range() -> tuple:
     """
     Function that get the range of records to display in the table
+    It returns row number and column number
     """
     while True:
         try:
@@ -235,7 +242,7 @@ def get_user_row_to_update() -> int:
 
 def get_user_value_for_each_cell() -> list:
     """
-    Function that returns list of values for new row
+    Function that returns list of values for each cell in a new row
     """
     new_row_value = []
     keys_number = keys.get_current_keys()

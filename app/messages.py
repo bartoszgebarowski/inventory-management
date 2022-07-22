@@ -57,37 +57,26 @@ def help() -> None:
         user_choice_lower = user_input.lower()
         if user_choice_lower == "1":
             print_help_set_active_worksheet()
-            continue
         elif user_choice_lower == "2":
             print_help_set_active_worksheet()
-            continue
         elif user_choice_lower == "3":
             print_help_rename_worksheet()
-            continue
         elif user_choice_lower == "4":
             print_help_delete_worksheet()
-            continue
         elif user_choice_lower == "5":
             print_help_duplicate_worksheet()
-            continue
         elif user_choice_lower == "6":
             print_help_print_worksheet_content()
-            continue
         elif user_choice_lower == "7":
             print_help_clear_worksheet()
-            continue
         elif user_choice_lower == "8":
             print_help_add_data_sorting_keys()
-            continue
         elif user_choice_lower == "9":
             print_help_add_row()
-            continue
         elif user_choice_lower == "10":
             print_help_modify_single_cell()
-            continue
         elif user_choice_lower == "11":
             print_help_modify_single_row()
-            continue
         elif user_choice_lower == "q" or user_choice_lower == "quit":
             break
         else:

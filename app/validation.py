@@ -8,6 +8,7 @@ def validate_user_chosen_sheet(
 ) -> str:
     """
     Function that checks if user input exist as a worksheet
+    It returns a worksheet name from a spreadsheet
     """
     user_input_lower = input_candidate.lower()
     worksheets_names = [
@@ -37,14 +38,14 @@ def check_if_worksheet_exist(input_candidate: str) -> bool:
 
 def check_active_worksheet() -> bool:
     """
-    Function that checks if active worksheet was selected
+    Function that checks if active worksheet is assigned to config
     """
     return bool(config.current_worksheet)
 
 
-def check_keys_for_duplicates(keys_candidate: list) -> bool:
+def check_for_duplicates(keys_candidate: list) -> bool:
     """
-    Functions that will check if data sorting keys are unique
+    Functions that will check if sorting keys are unique
     """
     compare_keys = []
     for key in keys_candidate:
